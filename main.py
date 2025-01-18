@@ -7,7 +7,11 @@ from sympy.polys.polyerrors import GeneratorsNeeded
 
 
 def expand_poly_aminbsq(min_coeff=1, max_coeff=12):
-
+    """
+    Expand expression (ax)**2-b**2
+    Computes the roots
+    returns the expanded expression, its factorization, its roots
+    """
     x = Symbol('x')
     exp=((randrange(1, max_coeff)*x)**2 - randrange(min_coeff,max_coeff)**2)
     fact=factor(exp )
