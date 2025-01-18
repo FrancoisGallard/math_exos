@@ -1,15 +1,10 @@
 # This is a sample Python script.
 import latextable
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import sympy as sp
 from sympy import Symbol, expand, factor, rootof
 from random import randrange
-import tabulate
 from texttable import  Texttable
 from sympy.polys.polyerrors import GeneratorsNeeded
 
-import random
 
 def expand_poly_aminbsq(min_coeff=1, max_coeff=12):
 
