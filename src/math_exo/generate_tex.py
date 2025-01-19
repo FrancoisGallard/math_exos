@@ -1,11 +1,7 @@
-# This is a sample Python script.
-from typing import List, Tuple
-
 import latextable
 from texttable import  Texttable
-from sympy.polys.polyerrors import GeneratorsNeeded
 
-from math_exo.problems import CalculusProblem
+from math_exo.base_problems import CalculusProblem
 from math_exo.utils import pretty_print_eq
 
 def latexify_table(lines, headers):
