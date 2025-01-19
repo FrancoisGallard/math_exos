@@ -13,6 +13,7 @@ def sym_rand_int(max_coeff):
 class CalculusProblem():
     equation: str = "Equation"
     solution: str = "Solution"
+    fonction : str = "Fonction"
     racines: str = "Racines"
     racine: str = "Racine"
     derivee: str = "Dérivée"
@@ -81,7 +82,7 @@ class ExpandFactorFindRoots(CalculusProblem):
 
 
 class DifferentiationProblem(CalculusProblem):
-    header: List[str] = [CalculusProblem.equation, CalculusProblem.derivee]
+    header: List[str] = [CalculusProblem.fonction, CalculusProblem.derivee]
 
     @abstractmethod
     def _get_one_expr(self) -> Expr:
