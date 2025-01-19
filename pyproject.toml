@@ -1,0 +1,18 @@
+[project]
+name = "math-exos"
+version = "0.1"
+description = "Generate math problems and solution in Latex"
+readme = "README.md"
+authors = [{name = "Francois Gallard, Flore Crevel"}]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "Development Status :: 4 - Beta"
+]
+dependencies = [
+    "latextable","sympy"
+]
+
+[project.urls]
+Homepage = "https://github.com/FrancoisGallard/math_exos"
+Changelog = "https://github.com/FrancoisGallard/math_exos/releases"
+Issues = "https://github.com/FrancoisGallard/math_exos/issues"
