@@ -2,9 +2,9 @@ from random import randrange
 from typing import List, Tuple
 
 from sympy import Expr, expand
-from sympy import Symbol, factor, rootof
+from sympy import Symbol, factor, diff
 
-from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int
+from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, DifferentiationProblem
 from math_exo.utils import pretty_print_eq
 
 
@@ -17,7 +17,7 @@ class FactorPolyAX2MinB2(ExpandFactorFindRoots):
     header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.factorisation, ExpandFactorFindRoots.racines]
 
     def _get_one_expr(self) -> Expr:
-        x = Symbol('x')
+        x = self.x
         return (randrange(1, self.max_coeff) * x) ** 2 - randrange(self.min_coeff, self.max_coeff) ** 2
 
 
@@ -30,7 +30,7 @@ class ExpandPolyAX2MinB2(ExpandFactorFindRoots):
     header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.developpement, ExpandFactorFindRoots.racines]
 
     def _get_one_expr(self) -> Expr:
-        x = Symbol('x')
+        x = self.x
         return (randrange(1, self.max_coeff) * x+ randrange(self.min_coeff, self.max_coeff)) ** 2
 
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
@@ -47,7 +47,7 @@ class FactorPolySum(ExpandFactorFindRoots):
     expand_expr = False
 
     def _get_one_expr(self) -> Expr:
-        x = Symbol('x')
+        x = self.x
         a = randrange(1, self.max_coeff)
         b, c, d, e, f, g = [randrange(self.min_coeff, self.max_coeff) for _ in range(6)]
         a_expr = a * x + b
@@ -62,7 +62,7 @@ class FactorEqsTwoLin(ExpandFactorFindRoots):
     expand_expr = False
 
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
-        x = Symbol('x')
+        x = self.x
 
         a, b, c, d = [sym_rand_int(self.max_coeff) for _ in range(4)]
         left = a * x + b
@@ -82,7 +82,7 @@ class ProdTwoLins(ExpandFactorFindRoots):
     header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.racines]
 
     def _generate(self) -> Tuple[Expr, List[Expr]]:
-        x = Symbol('x')
+        x = self.x
         a = randrange(1, self.max_coeff)
         b, c, d = [sym_rand_int(self.max_coeff) for _ in range(3)]
         left = a * x + b
@@ -91,3 +91,31 @@ class ProdTwoLins(ExpandFactorFindRoots):
         exp = f'{exp_sol} = 0'
         roots = self.get_roots(exp_sol)
         return exp, roots
+
+from sympy.polys.specialpolys import random_poly
+
+from random import randint
+
+
+
+class DiffPolyFlat(DifferentiationProblem):
+    
+    def _get_one_expr(self) -> Expr:
+        n = randint(2, 5)
+        return random_poly(self.x,n, inf=self.min_coeff,sup=self.max_coeff)
+
+
+class Diff2Polys1(DifferentiationProblem):
+
+    def _get_one_expr(self) -> Expr:
+        n = randint(1, 3)
+        p1 = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
+        p2 = random_poly(self.x, n, inf=self.min_coeff, sup=self.max_coeff)
+        return p1*p2
+
+
+class DiffPolyExp(DifferentiationProblem):
+
+    def _get_one_expr(self) -> Expr:
+        n = randint(2, 5)
+        return random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)**n

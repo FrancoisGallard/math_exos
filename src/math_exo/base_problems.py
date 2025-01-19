@@ -2,7 +2,7 @@ from abc import abstractmethod
 from random import randrange
 from typing import List, Tuple
 
-from sympy import Expr
+from sympy import Expr, Symbol, diff
 from sympy import expand, factor, rootof, GeneratorsNeeded
 
 
@@ -21,6 +21,7 @@ class CalculusProblem():
     header: List[str] = [equation, solution]
     degree = 1
     section_name: str = ""
+    x = Symbol("x")
 
     def __init__(self, min_coeff: int = -12, max_coeff: int = 12):
         self.min_coeff: int = min_coeff
@@ -76,3 +77,15 @@ class ExpandFactorFindRoots(CalculusProblem):
 
         roots = self.get_roots( fact)
         return exp, fact, roots
+
+
+class DifferentiationProblem(CalculusProblem):
+    header: List[str] = [CalculusProblem.equation, CalculusProblem.derivee ]
+
+    @abstractmethod
+    def _get_one_expr(self) -> Expr:
+        return
+
+    def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
+        expression = self._get_one_expr()
+        return expression, diff(expression, self.x)
