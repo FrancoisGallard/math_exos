@@ -1,9 +1,12 @@
+import random
 from random import randrange
 from typing import List, Tuple
 
 from sympy import Expr, expand
-from sympy import Symbol, factor, diff
+from sympy import factor, sqrt
+from sympy.polys.specialpolys import random_poly
 
+from random import randint
 from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, DifferentiationProblem
 from math_exo.utils import pretty_print_eq
 
@@ -92,21 +95,19 @@ class ProdTwoLins(ExpandFactorFindRoots):
         roots = self.get_roots(exp_sol)
         return exp, roots
 
-from sympy.polys.specialpolys import random_poly
 
-from random import randint
 
 
 
 class DiffPolyFlat(DifferentiationProblem):
-    
+    """d/dx(ax**4 + bx**3 + cx**2 + dx + e)"""
     def _get_one_expr(self) -> Expr:
         n = randint(2, 5)
         return random_poly(self.x,n, inf=self.min_coeff,sup=self.max_coeff)
 
 
 class Diff2Polys1(DifferentiationProblem):
-
+    """d/dx(ax**2 + bx + c )*(a2x**3 + b2x**2 + c2x + d2)"""
     def _get_one_expr(self) -> Expr:
         n = randint(1, 3)
         p1 = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
@@ -115,7 +116,32 @@ class Diff2Polys1(DifferentiationProblem):
 
 
 class DiffPolyExp(DifferentiationProblem):
-
+    """d/dx(ax+b )**n"""
     def _get_one_expr(self) -> Expr:
         n = randint(2, 5)
         return random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)**n
+
+class DiffPolyFrac(DifferentiationProblem):
+    """d/dx(ax**3 + bx**2 + cx +d )*(a2x + b )"""
+    def _get_one_expr(self) -> Expr:
+        n1 = randint(2, 3)
+        num= random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
+        den= random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+
+        p=randint(2, 9)
+        return (num/den)**p
+
+
+class DiffPolyFracSqrt(DifferentiationProblem):
+    """d/dx sqrt(ax**3 + bx**2 + cx +d ) """
+    def _get_one_expr(self) -> Expr:
+        n1 = randint(2, 3)
+        num= random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
+        return sqrt(num)
+
+class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
+    """d/dx sqrt(ax**3 + bx**2 + cx +d ) **(-1 or 1)"""
+    def _get_one_expr(self) -> Expr:
+        expr=super(DiffPolyFracSqrtInv, self)._get_one_expr()
+        pow_p=  1 if random.random() < 0.5 else -1
+        return expr**pow_p
