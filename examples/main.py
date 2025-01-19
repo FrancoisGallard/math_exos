@@ -1,13 +1,13 @@
 # This is a sample Python script.
 from math_exo.generate_tex import generate_latex_files, generate_table
-from math_exo.problems import ExpandPolyAX2MinB2, FactorPolyAX2MinB2, FactorEqsTwoLin, FactorPolySum, ProdTwoLins
+from math_exo.problems import FactorPolyAX2MinB2, ExpandPolyAX2MinB2, FactorEqsTwoLin, FactorPolySum, ProdTwoLins
 
 if __name__ == '__main__':
 
     solution_tables=[]
     questions_tables=[]
 
-    problems=[ExpandPolyAX2MinB2(), FactorPolyAX2MinB2()]
+    problems=[FactorPolyAX2MinB2(), ExpandPolyAX2MinB2()]
     problems+=[ FactorEqsTwoLin(), FactorPolySum(), ProdTwoLins()]
 
     for problem in problems:

@@ -46,7 +46,8 @@ def generate_latex_files(solution_tables, questions_tables, title):
             outf.write(r"\documentclass[11pt,a4paper]{article}" + "\n")
             # outf.write(r"\usepackage{booktabs,siunitx}" + "\n")
             outf.write(r"\usepackage[margin=1cm, tmargin=0cm, textheight=27cm]{geometry}" + "\n")
-
+            outf.write(r"\usepackage[latin1]{inputenc}" + "\n")
+            outf.write(r"\usepackage[francais]{babel}" + "\n")
             outf.write(r"\begin{document}" + "\n")
             outf.write(r"\date{}" + "\n")
 

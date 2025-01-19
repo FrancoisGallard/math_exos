@@ -17,6 +17,7 @@ class CalculusProblem():
     racine: str = "Racine"
     derivee: str = "Dérivée"
     factorisation: str = "Factorisation"
+    developpement:str = "Développement"
     header: List[str] = [equation, solution]
     degree = 1
     section_name: str = ""

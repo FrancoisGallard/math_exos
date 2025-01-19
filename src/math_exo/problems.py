@@ -1,36 +1,43 @@
 from random import randrange
 from typing import List, Tuple
 
-from sympy import Expr
+from sympy import Expr, expand
 from sympy import Symbol, factor, rootof
 
 from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int
 from math_exo.utils import pretty_print_eq
 
 
-class ExpandPolyAX2MinB2(ExpandFactorFindRoots):
+class FactorPolyAX2MinB2(ExpandFactorFindRoots):
     """
     (ax)**2-b**2
     """
     degree = 2
     expand_expr = False
+    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.factorisation, ExpandFactorFindRoots.racines]
 
     def _get_one_expr(self) -> Expr:
         x = Symbol('x')
         return (randrange(1, self.max_coeff) * x) ** 2 - randrange(self.min_coeff, self.max_coeff) ** 2
 
 
-class FactorPolyAX2MinB2(ExpandFactorFindRoots):
+class ExpandPolyAX2MinB2(ExpandFactorFindRoots):
     """
     (a*x+b)**2
     """
     degree = 2
-    expand_expr = False
+    expand_expr = True
+    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.developpement, ExpandFactorFindRoots.racines]
 
     def _get_one_expr(self) -> Expr:
         x = Symbol('x')
-        return (randrange(1, self.max_coeff) * x) ** 2 - randrange(self.min_coeff, self.max_coeff) ** 2
+        return (randrange(1, self.max_coeff) * x+ randrange(self.min_coeff, self.max_coeff)) ** 2
 
+    def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
+        exp = self._get_one_expr()
+        expanded=expand(exp)
+        roots = self.get_roots(exp)
+        return exp, expanded, roots
 
 class FactorPolySum(ExpandFactorFindRoots):
     """
