@@ -17,7 +17,7 @@ class CalculusProblem():
     racine: str = "Racine"
     derivee: str = "Dérivée"
     factorisation: str = "Factorisation"
-    developpement:str = "Développement"
+    developpement: str = "Développement"
     header: List[str] = [equation, solution]
     degree = 1
     section_name: str = ""
@@ -58,14 +58,15 @@ class ExpandFactorFindRoots(CalculusProblem):
         return
 
     def get_roots(self, expr):
-        roots=[]
+        roots = []
         for i in range(self.degree):
             try:
-                root=rootof(expr, i)
+                root = rootof(expr, i)
                 roots.append(root)
             except:
                 pass
         return roots
+
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
         expression = self._get_one_expr()
         if self.expand_expr:
@@ -75,12 +76,12 @@ class ExpandFactorFindRoots(CalculusProblem):
             exp = expression
             fact = factor(exp)
 
-        roots = self.get_roots( fact)
+        roots = self.get_roots(fact)
         return exp, fact, roots
 
 
 class DifferentiationProblem(CalculusProblem):
-    header: List[str] = [CalculusProblem.equation, CalculusProblem.derivee ]
+    header: List[str] = [CalculusProblem.equation, CalculusProblem.derivee]
 
     @abstractmethod
     def _get_one_expr(self) -> Expr:

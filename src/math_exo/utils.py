@@ -1,7 +1,8 @@
-
 import re
 
+
 def pretty_print_eq(eq: str):
+    # TODO: use sympy.print_latex
     eq_cln_exp = str(eq).replace("**", "^").replace("*", "")
     pattern = r'\bsqrt\((.*?)\)'
 
