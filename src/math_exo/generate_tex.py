@@ -7,9 +7,15 @@ from math_exo.utils import pretty_print_eq
 
 def latexify_table(lines, headers):
     table_quest = Texttable()
-    align = ["p{6cm}", "p{8cm}"]
-    if len(headers) == 3:
-        align.append("p{3cm}")
+
+    if len(headers)==1:
+        align = ["p{17cm}"]
+    elif len(headers)==2:
+        align = ["p{8cm}", "p{9cm}"]
+    elif len(headers) == 3:
+        align=["p{6cm}", "p{8cm}", "p{3cm}"]
+    else:
+        raise ValueError("Table of size "+str(len(headers))+" not supported.")
     table_quest.set_cols_align(align)
     table_quest.add_rows([headers] + lines)
 

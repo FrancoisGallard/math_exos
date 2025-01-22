@@ -78,6 +78,26 @@ class FactorEqsTwoLin(ExpandFactorFindRoots):
         roots = self.get_roots(exp_sol)
         return exp, fact, roots
 
+class RationalFuncEq(ExpandFactorFindRoots):
+    """
+    (ax+b)/(cx+d)=k
+    ax+b=kcx+kd
+    (a-kc)x=kd-b
+    x=(kd-b)/(a-kc)
+    """
+    degree = 1
+    header = [ExpandFactorFindRoots.equation, "Valeurs interdites", ExpandFactorFindRoots.solutions]
+
+    def _generate(self) -> Tuple[Expr,Expr,Expr]:
+        x = self.x
+        c = Integer(randrange(1, self.max_coeff))
+        a, b, d, k = [Integer(sym_rand_int(self.max_coeff)) for _ in range(4)]
+        left = a * x + b
+        right = c * x + d
+        exp_sol = pretty_print_eq(left / right) +" = "+str(k)
+        forbidden = -d/c
+        root = (k*d-b)/(a-k*c)
+        return exp_sol, forbidden, root
 
 class ProdTwoLins(ExpandFactorFindRoots):
     """
