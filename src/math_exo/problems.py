@@ -17,7 +17,7 @@ class FactorPolyAX2MinB2(ExpandFactorFindRoots):
     """
     degree = 2
     expand_expr = False
-    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.factorisation, ExpandFactorFindRoots.racines]
+    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.factorisation, ExpandFactorFindRoots.solutions]
 
     def _get_one_expr(self) -> Expr:
         x = self.x
@@ -30,7 +30,7 @@ class ExpandPolyAX2MinB2(ExpandFactorFindRoots):
     """
     degree = 2
     expand_expr = True
-    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.developpement, ExpandFactorFindRoots.racines]
+    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.developpement, ExpandFactorFindRoots.solutions]
 
     def _get_one_expr(self) -> Expr:
         x = self.x
@@ -83,7 +83,7 @@ class ProdTwoLins(ExpandFactorFindRoots):
     (a*x+b) * (cx+d)=0
     """
     degree = 2
-    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.racines]
+    header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.solutions]
 
     def _generate(self) -> Tuple[Expr, List[Expr]]:
         x = self.x

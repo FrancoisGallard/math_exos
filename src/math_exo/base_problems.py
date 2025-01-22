@@ -12,14 +12,12 @@ def sym_rand_int(max_coeff):
 
 class CalculusProblem():
     equation: str = "Equation"
-    solution: str = "Solution"
+    solutions: str = "Solutions"
     fonction : str = "Fonction"
-    racines: str = "Racines"
-    racine: str = "Racine"
     derivee: str = "Dérivée"
     factorisation: str = "Factorisation"
     developpement: str = "Développement"
-    header: List[str] = [equation, solution]
+    header: List[str] = [equation, solutions]
     degree = 1
     section_name: str = ""
     x = Symbol("x")
@@ -49,7 +47,7 @@ class CalculusProblem():
 
 
 class ExpandFactorFindRoots(CalculusProblem):
-    header: List[str] = [CalculusProblem.equation, CalculusProblem.factorisation, CalculusProblem.racines]
+    header: List[str] = [CalculusProblem.equation, CalculusProblem.factorisation, CalculusProblem.solutions]
 
     expand_expr: bool = True
     """Weather to expand or factorize the generated expression"""
@@ -58,7 +56,7 @@ class ExpandFactorFindRoots(CalculusProblem):
     def _get_one_expr(self) -> Expr:
         return
 
-    def get_roots(self, expr):
+    def get_roots(self, expr, as_tex=True):
         roots = []
         for i in range(self.degree):
             try:
@@ -66,6 +64,8 @@ class ExpandFactorFindRoots(CalculusProblem):
                 roots.append(root)
             except:
                 pass
+        if as_tex:
+            return str(roots).replace("[", "\{").replace("]", "\}")
         return roots
 
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
