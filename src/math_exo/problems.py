@@ -3,10 +3,11 @@ from random import randint
 from random import randrange
 from typing import List, Tuple
 
-from sympy import Expr, expand
+from sympy import Expr, expand, Integer
 from sympy import factor, sqrt
 from sympy.polys.specialpolys import random_poly
 
+from math_exo.base_problems import CalculusProblem
 from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, DifferentiationProblem
 from math_exo.utils import pretty_print_eq
 
@@ -160,3 +161,17 @@ class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
         expr = super(DiffPolyFracSqrtInv, self)._get_one_expr()
         pow_p = 1 if random.random() < 0.5 else -1
         return expr ** pow_p
+
+class CanonicalPoly2(CalculusProblem):
+    "a.x²+bx+c => a (x-Alpha)²+Beta"
+
+    header = ["Polynôme", "Forme canonique"]
+    def _generate(self) ->Tuple[Expr, List[Expr]]:
+        a= Integer(randint(1, self.max_coeff))
+        b = Integer(randint(self.min_coeff, self.max_coeff))
+        c = Integer(randint(self.min_coeff, self.max_coeff))
+        expr=a*self.x**2+b*self.x+c
+        alpha=-b/(2*a)
+        beta=c-b**2/(4*a)
+        sol=a*(self.x-alpha)**2+beta
+        return expr, sol
