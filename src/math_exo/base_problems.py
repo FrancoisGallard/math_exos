@@ -21,6 +21,7 @@ class CalculusProblem():
     degree = 1
     section_name: str = ""
     x = Symbol("x")
+    y = Symbol("y")
 
     def __init__(self, min_coeff: int = -12, max_coeff: int = 12):
         self.min_coeff: int = min_coeff

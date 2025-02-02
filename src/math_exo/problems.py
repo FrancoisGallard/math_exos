@@ -3,8 +3,8 @@ from random import randint
 from random import randrange
 from typing import List, Tuple
 
-from sympy import Expr, expand, Integer
-from sympy import factor, sqrt
+from sympy import Expr, expand, Integer, latex
+from sympy import factor, sqrt, solve
 from sympy.polys.specialpolys import random_poly
 
 from math_exo.base_problems import CalculusProblem
@@ -183,9 +183,9 @@ class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
         return expr ** pow_p
 
 class CanonicalPoly2(CalculusProblem):
-    "a.x²+bx+c => a (x-Alpha)²+Beta"
+    """a.x²+bx+c => a (x-Alpha)²+Beta"""
 
-    header = ["Polynôme", "Forme canonique"]
+    header = ["Polynome", "Forme canonique"]
     def _generate(self) ->Tuple[Expr, List[Expr]]:
         a= Integer(randint(1, self.max_coeff))
         b = Integer(randint(self.min_coeff, self.max_coeff))
@@ -195,3 +195,31 @@ class CanonicalPoly2(CalculusProblem):
         beta=c-b**2/(4*a)
         sol=a*(self.x-alpha)**2+beta
         return expr, sol
+
+class LinearSystem2eqs(CalculusProblem):
+    """
+    a.x+b.y = c
+    d.x+e.y = f
+    """
+
+    header = ["Equations", "Solutions"]
+
+    def _generate(self) -> Tuple[Expr, List[Expr]]:
+        a1,a2 =  Integer(randint(1, self.max_coeff)),Integer(randint(1, self.max_coeff))
+        coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(4)]
+        x, y=self.x, self.y
+        equations = [a1*x+coeffs[0]*y+coeffs[1],a2*x+coeffs[2]*y+coeffs[3]]
+        try:
+            sol = list(solve(equations, [x, y], set=True)[1])[0]
+        except:
+            sol=[]
+
+        lhs=[a1*x+coeffs[0]*y ,a2*x+coeffs[2]*y ]
+        rhs=[-coeffs[1], -coeffs[3]]
+        eq_str=r"$\systeme{%s = %s,%s = %s}$"%(latex(lhs[0]), rhs[0],latex(lhs[1]),rhs[1])
+
+        if sol:
+            sol_str=r"$["+ ",".join([latex(s) for s in sol])+r"]$"
+        else:
+            sol_str="Pas de solutions"
+        return eq_str, sol_str
