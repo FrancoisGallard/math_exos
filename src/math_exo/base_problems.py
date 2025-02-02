@@ -13,7 +13,7 @@ def sym_rand_int(max_coeff):
 class CalculusProblem():
     equation: str = "Equation"
     solutions: str = "Solutions"
-    fonction : str = "Fonction"
+    fonction: str = "Fonction"
     derivee: str = "Dérivée"
     factorisation: str = "Factorisation"
     developpement: str = "Développement"

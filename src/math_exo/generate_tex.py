@@ -11,14 +11,14 @@ from math_exo.utils import pretty_print_eq
 def latexify_table(lines, headers):
     table_quest = Texttable()
 
-    if len(headers)==1:
+    if len(headers) == 1:
         align = ["p{17cm}"]
-    elif len(headers)==2:
+    elif len(headers) == 2:
         align = ["p{8cm}", "p{9cm}"]
     elif len(headers) == 3:
-        align=["p{6cm}", "p{8cm}", "p{3cm}"]
+        align = ["p{6cm}", "p{8cm}", "p{3cm}"]
     else:
-        raise ValueError("Table of size "+str(len(headers))+" not supported.")
+        raise ValueError("Table of size " + str(len(headers)) + " not supported.")
     table_quest.set_cols_align(align)
     table_quest.add_rows([headers] + lines)
 
@@ -47,7 +47,7 @@ def generate_table(problem: CalculusProblem, n_expr: int = 10):
 
 
 def generate_latex_files(solution_tables, questions_tables, title):
-    solution_buf, questions_buf=generate_files_content(solution_tables, questions_tables, title)
+    solution_buf, questions_buf = generate_files_content(solution_tables, questions_tables, title)
     solution_file = open("solution.tex", 'w')
     questions_file = open("questions.tex", 'w')
     try:
@@ -60,13 +60,14 @@ def generate_latex_files(solution_tables, questions_tables, title):
         solution_file.close()
         questions_file.close()
 
+
 def generate_files_content(solution_tables, questions_tables, title):
     solution, questions = StringIO(), StringIO()
     for outf in [solution, questions]:
 
         outf.write(r"\documentclass[11pt,a4paper]{article}" + "\n")
         outf.write(r"\usepackage[margin=1cm, tmargin=1cm, textheight=20cm, vmargin=1.5cm]{geometry}" + "\n")
-        outf.write(r"\usepackage[latin1]{inputenc}" + "\n")
+        outf.write(r"\usepackage[latin1, utf8]{inputenc}" + "\n")
         outf.write(r"\usepackage[french]{babel}" + "\n")
         outf.write(r"\usepackage{systeme}" + "\n")
         outf.write(r"\begin{document}" + "\n")
@@ -89,4 +90,3 @@ def generate_files_content(solution_tables, questions_tables, title):
         outf.write(r"\end{document}" + "\n")
 
     return solution, questions
-
