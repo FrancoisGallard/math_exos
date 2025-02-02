@@ -4,12 +4,12 @@ version = "0.1"
 description = "Generate math problems and solution in Latex"
 readme = "README.md"
 authors = [{name = "Francois Gallard, Flore Crevel"}]
-license = {text = "Apache-2.0"}
+license = {text = "AGPL"}
 classifiers = [
     "Development Status :: 4 - Beta"
 ]
 dependencies = [
-    "latextable","sympy"
+    "latextable","sympy", "streamlit"
 ]
 
 [project.urls]

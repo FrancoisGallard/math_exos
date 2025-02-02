@@ -4,6 +4,7 @@ from math_exo.problems import FactorPolyAX2MinB2, ExpandPolyAX2MinB2, FactorEqsT
     DiffPolyFlat, Diff2Polys1, DiffPolyExp, DiffPolyFrac, DiffPolyFracSqrt, DiffPolyFracSqrtInv, CanonicalPoly2, \
     DiffPolyFracDeg1, RationalFuncEq, LinearSystem2eqs
 
+
 if __name__ == '__main__':
 
     solution_tables = []

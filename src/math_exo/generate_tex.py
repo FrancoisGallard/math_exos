@@ -1,3 +1,6 @@
+import shutil
+from io import StringIO
+
 import latextable
 from texttable import Texttable
 
@@ -44,34 +47,46 @@ def generate_table(problem: CalculusProblem, n_expr: int = 10):
 
 
 def generate_latex_files(solution_tables, questions_tables, title):
-    solution = open("solution.tex", 'w')
-    questions = open("questions.tex", 'w')
+    solution_buf, questions_buf=generate_files_content(solution_tables, questions_tables, title)
+    solution_file = open("solution.tex", 'w')
+    questions_file = open("questions.tex", 'w')
     try:
-        for outf in [solution, questions]:
 
-            outf.write(r"\documentclass[11pt,a4paper]{article}" + "\n")
-            outf.write(r"\usepackage[margin=1cm, tmargin=1cm, textheight=20cm, vmargin=1.5cm]{geometry}" + "\n")
-            outf.write(r"\usepackage[latin1]{inputenc}" + "\n")
-            outf.write(r"\usepackage[french]{babel}" + "\n")
-            outf.write(r"\usepackage{systeme}" + "\n")
-            outf.write(r"\begin{document}" + "\n")
-            outf.write(r"\date{}" + "\n")
-
-            outf.write(r"\title{" + str(title) + "}" + "\n")
-            outf.write(r"\maketitle" + "\n")
-
-            outf.write(r"{\renewcommand{\arraystretch}{2}" + "\n")
-            if outf == solution:
-                for tex_txt in solution_tables:
-                    outf.write(tex_txt)
-                    outf.write("\n")
-            else:
-                for tex_txt in questions_tables:
-                    outf.write(tex_txt)
-                    outf.write("\n")
-
-            outf.write("}\n")
-            outf.write(r"\end{document}" + "\n")
+        solution_buf.seek(0)
+        shutil.copyfileobj(solution_buf, solution_file)
+        questions_buf.seek(0)
+        shutil.copyfileobj(questions_buf, questions_file)
     finally:
-        solution.close()
-        questions.close()
+        solution_file.close()
+        questions_file.close()
+
+def generate_files_content(solution_tables, questions_tables, title):
+    solution, questions = StringIO(), StringIO()
+    for outf in [solution, questions]:
+
+        outf.write(r"\documentclass[11pt,a4paper]{article}" + "\n")
+        outf.write(r"\usepackage[margin=1cm, tmargin=1cm, textheight=20cm, vmargin=1.5cm]{geometry}" + "\n")
+        outf.write(r"\usepackage[latin1]{inputenc}" + "\n")
+        outf.write(r"\usepackage[french]{babel}" + "\n")
+        outf.write(r"\usepackage{systeme}" + "\n")
+        outf.write(r"\begin{document}" + "\n")
+        outf.write(r"\date{}" + "\n")
+
+        outf.write(r"\title{" + str(title) + "}" + "\n")
+        outf.write(r"\maketitle" + "\n")
+
+        outf.write(r"{\renewcommand{\arraystretch}{2}" + "\n")
+        if outf == solution:
+            for tex_txt in solution_tables:
+                outf.write(tex_txt)
+                outf.write("\n")
+        else:
+            for tex_txt in questions_tables:
+                outf.write(tex_txt)
+                outf.write("\n")
+
+        outf.write("}\n")
+        outf.write(r"\end{document}" + "\n")
+
+    return solution, questions
+

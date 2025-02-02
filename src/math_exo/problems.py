@@ -223,3 +223,10 @@ class LinearSystem2eqs(CalculusProblem):
         else:
             sol_str="Pas de solutions"
         return eq_str, sol_str
+
+
+ALL_PROBLEMS = [FactorPolyAX2MinB2, ExpandPolyAX2MinB2]
+ALL_PROBLEMS += [FactorEqsTwoLin, FactorPolySum, ProdTwoLins]
+ALL_PROBLEMS += [DiffPolyFlat, Diff2Polys1, DiffPolyExp, DiffPolyFrac, DiffPolyFracSqrt]
+ALL_PROBLEMS += [DiffPolyFracDeg1, DiffPolyFracSqrt, DiffPolyFracSqrtInv]
+ALL_PROBLEMS+=[CanonicalPoly2, RationalFuncEq, LinearSystem2eqs]
