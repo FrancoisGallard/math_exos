@@ -57,9 +57,9 @@ with st.sidebar:
 
 if pb_selects:
     solution, questions = generate(pb_selects, nb_eqs)
-    st.subheader('Téléchargements')
-    st.download_button("Télécharger le fichier de solutions", solution, file_name="solution.tex")
-    st.download_button("Télécharger le fichier de questions", questions, file_name="questions.tex")
+    # st.subheader('Téléchargements')
+    # st.download_button("Télécharger le fichier de solutions", solution, file_name="solution.tex")
+    # st.download_button("Télécharger le fichier de questions", questions, file_name="questions.tex")
 
     st.subheader('Compiler dans Overleaf')
     body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
