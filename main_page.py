@@ -61,20 +61,16 @@ if pb_selects:
     # st.download_button("Télécharger le fichier de solutions", solution, file_name="solution.tex")
     # st.download_button("Télécharger le fichier de questions", questions, file_name="questions.tex")
 
-    st.subheader('Compiler dans Overleaf')
+    st.subheader('Générer le code LateX et le compiler')
     body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
 <textarea rows="8" cols="120" name="snip">
 {questions}
 </textarea>
-<input type="submit" value="Ouvrir les questions dans Overleaf">
-</form>
-"""
-    st.html(body)
-    body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
 <textarea rows="8" cols="120" name="snip">
 {solution}
 </textarea>
-<input type="submit" value="Ouvrir la solution dans Overleaf">
+<input type="submit" value="Ouvrir dans Overleaf pour compiler">
 </form>
 """
     st.html(body)
+

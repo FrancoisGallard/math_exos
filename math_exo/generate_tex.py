@@ -63,7 +63,8 @@ def generate_latex_files(solution_tables, questions_tables, title):
 
 def generate_files_content(solution_tables, questions_tables, title):
     solution, questions = StringIO(), StringIO()
-    for outf in [solution, questions]:
+
+    for is_solution, outf in zip([True, False],[solution, questions]):
 
         outf.write(r"\documentclass[11pt,a4paper]{article}" + "\n")
         outf.write(r"\usepackage[margin=1cm, tmargin=1cm, textheight=20cm, vmargin=1.5cm]{geometry}" + "\n")
@@ -73,7 +74,11 @@ def generate_files_content(solution_tables, questions_tables, title):
         outf.write(r"\begin{document}" + "\n")
         outf.write(r"\date{}" + "\n")
 
-        outf.write(r"\title{" + str(title) + "}" + "\n")
+        if is_solution:
+            outf.write(r"\title{" + str(title) + " - Solution}\n")
+        else:
+            outf.write(r"\title{" + str(title) + "}\n")
+
         outf.write(r"\maketitle" + "\n")
 
         outf.write(r"{\renewcommand{\arraystretch}{2}" + "\n")
