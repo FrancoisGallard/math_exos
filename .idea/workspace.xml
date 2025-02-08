@@ -7,7 +7,8 @@
     <list default="true" id="77480ddf-e54f-4b48-9048-5a659cd55a75" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_page.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/math_exo/generate_tex.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/generate_tex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/base_problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/base_problems.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/problems.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

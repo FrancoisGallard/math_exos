@@ -11,6 +11,7 @@ def sym_rand_int(max_coeff):
 
 
 class CalculusProblem():
+    """Abstract calculus problem"""
     equation: str = "Equation"
     solutions: str = "Solutions"
     fonction: str = "Fonction"
@@ -22,6 +23,9 @@ class CalculusProblem():
     section_name: str = ""
     x = Symbol("x")
     y = Symbol("y")
+
+    EXERCICE_TYPE:str=""
+    NAME: str = ""
 
     def __init__(self, min_coeff: int = -12, max_coeff: int = 12):
         self.min_coeff: int = min_coeff
@@ -48,6 +52,8 @@ class CalculusProblem():
 
 
 class ExpandFactorFindRoots(CalculusProblem):
+    """Abstract expand find roots"""
+    EXERCICE_TYPE = ""
     header: List[str] = [CalculusProblem.equation, CalculusProblem.factorisation, CalculusProblem.solutions]
 
     expand_expr: bool = True
@@ -66,7 +72,7 @@ class ExpandFactorFindRoots(CalculusProblem):
             except:
                 pass
         if as_tex:
-            return str(roots).replace("[", "\{").replace("]", "\}")
+            return str(roots).replace("[", r"\{").replace("]", r"\}")
         return roots
 
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
@@ -83,8 +89,9 @@ class ExpandFactorFindRoots(CalculusProblem):
 
 
 class DifferentiationProblem(CalculusProblem):
+    """Abstract differenciation"""
     header: List[str] = [CalculusProblem.fonction, CalculusProblem.derivee]
-
+    EXERCICE_TYPE = "Dérivation"
     @abstractmethod
     def _get_one_expr(self) -> Expr:
         return

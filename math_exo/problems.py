@@ -15,8 +15,9 @@ from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, Differen
 from math_exo.utils import pretty_print_eq
 
 
-class FactorPolyAX2MinB2(ExpandFactorFindRoots):
-    """Factoriser et résoudre (a.x)**2-b**2=0"""
+class IdentiteRemarquableA2_B2(ExpandFactorFindRoots):
+    """Factoriser et résoudre (a.x)²-b²=0"""
+    EXERCICE_TYPE = "Factoriser et résoudre"
     degree = 2
     expand_expr = False
     header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.factorisation, ExpandFactorFindRoots.solutions]
@@ -26,8 +27,9 @@ class FactorPolyAX2MinB2(ExpandFactorFindRoots):
         return (randrange(1, self.max_coeff) * x) ** 2 - randrange(self.min_coeff, self.max_coeff) ** 2
 
 
-class ExpandPolyAX2MinB2(ExpandFactorFindRoots):
-    """Développer (a.x+b)**2"""
+class IdentiteRemarquable(ExpandFactorFindRoots):
+    """Développer (a.x+b)²"""
+    EXERCICE_TYPE = "Développement"
     degree = 2
     expand_expr = True
     header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.developpement, ExpandFactorFindRoots.solutions]
@@ -44,7 +46,8 @@ class ExpandPolyAX2MinB2(ExpandFactorFindRoots):
 
 
 class FactorPolySum(ExpandFactorFindRoots):
-    """ Factoriser et résoudre (a.x+b)(c.x+d) + e(fx+g)(a.x+b)=0"""
+    """Factoriser et résoudre (a.x+b)(c.x+d) + e(fx+g)(a.x+b)=0"""
+    EXERCICE_TYPE = "Factoriser et résoudre"
     degree = 2
     expand_expr = False
 
@@ -57,7 +60,9 @@ class FactorPolySum(ExpandFactorFindRoots):
 
 
 class FactorEqsTwoLin(ExpandFactorFindRoots):
-    """ Factoriser et résoudre a.x+b = c.x+d"""
+    """Factoriser et résoudre a.x+b = c.x+d"""
+    EXERCICE_TYPE = "Factoriser et résoudre"
+    NAME = "a.x+b = c.x+d"
     degree = 1
     expand_expr = False
 
@@ -76,6 +81,7 @@ class FactorEqsTwoLin(ExpandFactorFindRoots):
 
 class RationalFuncEq(ExpandFactorFindRoots):
     """Factoriser et résoudre (a.x+b)/(c.x+d)=k"""
+    EXERCICE_TYPE = "Factoriser et résoudre"
     degree = 1
     header = [ExpandFactorFindRoots.equation, "Valeurs interdites", ExpandFactorFindRoots.solutions]
 
@@ -93,6 +99,7 @@ class RationalFuncEq(ExpandFactorFindRoots):
 
 class ProdTwoLins(ExpandFactorFindRoots):
     """Résoudre (a.x+b) * (c.x+d) = 0 """
+    EXERCICE_TYPE = "Résoudre"
     degree = 2
     header = [ExpandFactorFindRoots.equation, ExpandFactorFindRoots.solutions]
 
@@ -108,16 +115,14 @@ class ProdTwoLins(ExpandFactorFindRoots):
 
 
 class DiffPolyFlat(DifferentiationProblem):
-    """Dériver (a.x**4 + b.x**3 + c.x**2 + d.x + e)"""
-
+    """d/dx (a.x**4 + b.x**3 + c.x**2 + d.x + e)"""
     def _get_one_expr(self) -> Expr:
         n = randint(2, 5)
         return random_poly(self.x, n, inf=self.min_coeff, sup=self.max_coeff)
 
 
 class Diff2Polys1(DifferentiationProblem):
-    """Dériver (a.x**2 + b.x + c )*(d.x**3 + e.x**2 + f.x + g)"""
-
+    """d/dx (a.x**2 + b.x + c )*(d.x**3 + e.x**2 + f.x + g)"""
     def _get_one_expr(self) -> Expr:
         n = randint(1, 3)
         p1 = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
@@ -126,16 +131,14 @@ class Diff2Polys1(DifferentiationProblem):
 
 
 class DiffPolyExp(DifferentiationProblem):
-    """Dériver (a.x + b)**n"""
-
+    """d/dx (a.x + b)**n"""
     def _get_one_expr(self) -> Expr:
         n = randint(2, 5)
         return random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff) ** n
 
 
 class DiffPolyFracDeg1(DifferentiationProblem):
-    """Dériver (a.x**3 + b.x**2 + c.x + d )(e.x + f )"""
-
+    """d/dx (a.x**3 + b.x**2 + c.x + d )(e.x + f )"""
     def _get_one_expr(self) -> Expr:
         num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
         den = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
@@ -144,8 +147,7 @@ class DiffPolyFracDeg1(DifferentiationProblem):
 
 
 class DiffPolyFrac(DifferentiationProblem):
-    """Dériver (a.x**3 + b.x**2 + c.x +d )(e.x + f)"""
-
+    """d/dx (a.x**3 + b.x**2 + c.x +d )/(e.x + f)"""
     def _get_one_expr(self) -> Expr:
         n1 = randint(2, 3)
         num = random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
@@ -156,8 +158,7 @@ class DiffPolyFrac(DifferentiationProblem):
 
 
 class DiffPolyFracSqrt(DifferentiationProblem):
-    """Dériver sqrt(a.x**3 + b.x**2 + c.x + d )"""
-
+    """d/dx sqrt(a.x**3 + b.x**2 + c.x + d )"""
     def _get_one_expr(self) -> Expr:
         n1 = randint(2, 3)
         num = random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
@@ -165,7 +166,7 @@ class DiffPolyFracSqrt(DifferentiationProblem):
 
 
 class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
-    """Dériver sqrt(a.x**3 + b.x**2 + c.x +d ) ** (-1 ou 1)"""
+    """d/dx sqrt(a.x**3 + b.x**2 + c.x +d ) ** (-1 ou 1)"""
 
     def _get_one_expr(self) -> Expr:
         expr = super(DiffPolyFracSqrtInv, self)._get_one_expr()
@@ -174,9 +175,9 @@ class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
 
 
 class CanonicalPoly2(CalculusProblem):
-    """Mettre sous forme canonique a.x²+b.x+c"""
+    """Forme canonique de a.x²+b.x+c"""
     # => a (x-Alpha)²+Beta
-
+    EXERCICE_TYPE = "Forme canonique"
     header = ["Polynome", "Forme canonique"]
 
     def _generate(self) -> Tuple[Expr, List[Expr]]:
@@ -194,6 +195,7 @@ class LinearSystem2eqs(CalculusProblem):
     """Résoudre {a.x+b.y = c ; d.x+e.y = f}"""
 
     header = ["Equations", "Solutions"]
+    NAME = "2 équations linéaires"
 
     def _generate(self) -> Tuple[Expr, List[Expr]]:
         a1, a2 = Integer(randint(1, self.max_coeff)), Integer(randint(1, self.max_coeff))
@@ -217,4 +219,8 @@ class LinearSystem2eqs(CalculusProblem):
 
 
 predicate = lambda x: inspect.isclass(x) and issubclass(x, CalculusProblem)
-ALL_PROBLEMS = [i[1] for i in inspect.getmembers(sys.modules[__name__], predicate) if i[1] != CalculusProblem]
+ALL_PROBLEMS = [i[1] for i in inspect.getmembers(sys.modules[__name__], predicate) if not i[1].__doc__.startswith("Abstract")]
+ALL_PB_DOCS=[pb.__doc__ for pb in ALL_PROBLEMS]
+ALL_PB_TYPES=set(pb.EXERCICE_TYPE for pb in ALL_PROBLEMS)
+ALL_PROBLEMS_STR = sorted(ALL_PB_DOCS)
+ALL_PROBLEMS_SORTED = [x for _, x in sorted(zip(ALL_PB_DOCS, ALL_PROBLEMS))]
