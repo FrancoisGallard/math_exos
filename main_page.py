@@ -44,7 +44,7 @@ st.markdown(
         """
         <style>
             section[data-testid="stSidebar"] {
-                width: 600px !important; # Set the width to your desired value
+                width: 400px !important; # Set the width to your desired value
             }
         </style>
         """,
@@ -62,7 +62,7 @@ if pb_selects:
     st.download_button("Télécharger le fichier de questions", questions, file_name="questions.tex")
 
     st.subheader('Compiler dans Overleaf')
-    body = f"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
+    body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
 <textarea rows="8" cols="120" name="snip">
 {questions}
 </textarea>
@@ -70,8 +70,7 @@ if pb_selects:
 </form>
 """
     st.html(body)
-
-    body = f"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
+    body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
 <textarea rows="8" cols="120" name="snip">
 {solution}
 </textarea>
