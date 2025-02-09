@@ -111,7 +111,8 @@ class ProdTwoLins(ExpandFactorFindRoots):
         right = c * x + d
         exp_sol = left * right
         roots = self.get_roots(exp_sol)
-        return exp_sol, roots
+        exp_txt=latex(exp_sol)+" = 0"
+        return exp_txt, roots
 
 
 class DiffPolyFlat(DifferentiationProblem):

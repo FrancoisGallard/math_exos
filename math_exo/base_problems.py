@@ -2,7 +2,7 @@ from abc import abstractmethod
 from random import randrange
 from typing import List, Tuple
 
-from sympy import Expr, Symbol, diff
+from sympy import Expr, Symbol, diff, latex
 from sympy import expand, factor, rootof, GeneratorsNeeded
 
 
@@ -84,6 +84,7 @@ class ExpandFactorFindRoots(CalculusProblem):
             exp = expression
             fact = factor(exp)
 
+        exp= latex(exp)+" = 0"
         roots = self.get_roots(fact)
         return exp, fact, roots
 
