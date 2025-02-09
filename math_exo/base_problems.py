@@ -21,8 +21,8 @@ class CalculusProblem():
     header: List[str] = [equation, solutions]
     degree = 1
     section_name: str = ""
-    x = Symbol("x")
-    y = Symbol("y")
+    x = Symbol("x", real=True)
+    y = Symbol("y", real=True)
 
     EXERCICE_TYPE:str=""
     NAME: str = ""

@@ -217,8 +217,8 @@ class LinearSystem2eqs(CalculusProblem):
             sol_str = "Pas de solutions"
         return eq_str, sol_str
 
-class Inequalities2lin(CalculusProblem):
-    """Résoudre a.x+b.y <= c.x + d"""
+class Inequalities2Lin(CalculusProblem):
+    """Résoudre a.x + b <= c.x + d"""
 
     header = ["Equations", "Solutions"]
 
@@ -230,13 +230,27 @@ class Inequalities2lin(CalculusProblem):
         right = coeffs[2]*self.x + coeffs[3]
         equation= left <= right
         solutions=reduce_rational_inequalities([[equation]], self.x)
-
-        solutions_str =latex(solutions)
-        solutions_spl=solutions_str.split(r"\wedge")
-        solutions_str = [sol for sol in solutions_spl if "infty" not in sol]
-        solutions_str="$ "+solutions_str[0]+" $"
-
+        solutions_str="$ "+latex(solutions)+" $"
         equation_str = "$ "+latex(left)+r" \leq "+latex(right)+" $"
+        return equation_str, solutions_str
+
+class InequalitiesProd2Lin(CalculusProblem):
+    """Résoudre (a.x + b)(c.x + d) <= 0"""
+
+    header = ["Equations", "Solutions"]
+
+    def _generate(self) -> Tuple[str, str]:
+        coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(4)]
+        if coeffs[0]==coeffs[2]==0:
+            coeffs[0]+=1
+        left = coeffs[0]*self.x + coeffs[1]
+        right = coeffs[2]*self.x + coeffs[3]
+        equation= left * right <= 0
+        solutions=reduce_rational_inequalities([[equation]], self.x)
+        solutions_str ="$ "+latex(solutions)+" $"
+        solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+        equation_str = "$ "+latex(equation)+r" $"
+
         return equation_str, solutions_str
 
 predicate = lambda x: inspect.isclass(x) and issubclass(x, CalculusProblem)
