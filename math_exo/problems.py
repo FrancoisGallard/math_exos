@@ -6,9 +6,10 @@ from typing import List, Tuple
 import inspect
 import sys
 
-from sympy import Expr, expand, Integer, latex
+from sympy import Expr, expand, Integer, latex, solve_univariate_inequality
 from sympy import factor, sqrt, solve
 from sympy.polys.specialpolys import random_poly
+from sympy.solvers.inequalities import reduce_rational_inequalities
 
 from math_exo.base_problems import CalculusProblem
 from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, DifferentiationProblem
@@ -62,7 +63,6 @@ class FactorPolySum(ExpandFactorFindRoots):
 class FactorEqsTwoLin(ExpandFactorFindRoots):
     """Factoriser et résoudre a.x+b = c.x+d"""
     EXERCICE_TYPE = "Factoriser et résoudre"
-    NAME = "a.x+b = c.x+d"
     degree = 1
     expand_expr = False
 
@@ -196,7 +196,6 @@ class LinearSystem2eqs(CalculusProblem):
     """Résoudre {a.x+b.y = c ; d.x+e.y = f}"""
 
     header = ["Equations", "Solutions"]
-    NAME = "2 équations linéaires"
 
     def _generate(self) -> Tuple[Expr, List[Expr]]:
         a1, a2 = Integer(randint(1, self.max_coeff)), Integer(randint(1, self.max_coeff))
@@ -218,6 +217,27 @@ class LinearSystem2eqs(CalculusProblem):
             sol_str = "Pas de solutions"
         return eq_str, sol_str
 
+class Inequalities2lin(CalculusProblem):
+    """Résoudre a.x+b.y <= c.x + d"""
+
+    header = ["Equations", "Solutions"]
+
+    def _generate(self) -> Tuple[str, str]:
+        coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(4)]
+        if coeffs[0]==coeffs[2]:
+            coeffs[0]+=1
+        left = coeffs[0]*self.x + coeffs[1]
+        right = coeffs[2]*self.x + coeffs[3]
+        equation= left <= right
+        solutions=reduce_rational_inequalities([[equation]], self.x)
+
+        solutions_str =latex(solutions)
+        solutions_spl=solutions_str.split(r"\wedge")
+        solutions_str = [sol for sol in solutions_spl if "infty" not in sol]
+        solutions_str="$ "+solutions_str[0]+" $"
+
+        equation_str = "$ "+latex(left)+r" \leq "+latex(right)+" $"
+        return equation_str, solutions_str
 
 predicate = lambda x: inspect.isclass(x) and issubclass(x, CalculusProblem)
 ALL_PROBLEMS = [i[1] for i in inspect.getmembers(sys.modules[__name__], predicate) if not i[1].__doc__.startswith("Abstract")]
