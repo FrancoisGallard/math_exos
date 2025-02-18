@@ -58,7 +58,7 @@ if pb_selects:
     st.subheader(_(generate_code_))
     body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
     <div align="center">
-<input type="submit" value={_(open_overleaf_)}>
+<input type="submit" value="{_(open_overleaf_)}">
 </div>
 <textarea rows="8" cols="120" name="snip">
 {questions}
