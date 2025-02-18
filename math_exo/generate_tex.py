@@ -29,7 +29,7 @@ def latexify_table(lines, headers):
     return latex_quest
 
 
-def generate_table(problem: CalculusProblem, n_expr: int = 10):
+def generate_table(problem: CalculusProblem, header, n_expr: int = 10):
     lines_sol = []
     lines_question = []
 
@@ -37,11 +37,11 @@ def generate_table(problem: CalculusProblem, n_expr: int = 10):
         pretty_exprs = problem.pretty_print_eqs()
         lines_sol.append(pretty_exprs)
 
-        line_quest = [pretty_exprs[0]] + [" "] * (len(problem.header) - 1)
+        line_quest = [pretty_exprs[0]] + [" "] * (len(header) - 1)
         lines_question.append(line_quest)
 
-    latex_sol = latexify_table(lines_sol, problem.header)
-    latex_quest = latexify_table(lines_question, problem.header)
+    latex_sol = latexify_table(lines_sol, header)
+    latex_quest = latexify_table(lines_question, header)
     return latex_sol, latex_quest
 
 

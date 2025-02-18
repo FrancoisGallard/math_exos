@@ -34,7 +34,7 @@ def generate(problems_select, n_expr):
     solution_tables = []
     questions_tables = []
     for problem in problems:
-        latex_sol, latex_quest = generate_table(problem, n_expr=n_expr)
+        latex_sol, latex_quest = generate_table(problem, n_expr=n_expr, header=[_(h) for h in problem.header])
         solution_tables.append(latex_sol)
         questions_tables.append(latex_quest)
 
