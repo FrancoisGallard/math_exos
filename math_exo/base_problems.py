@@ -7,6 +7,8 @@ from sympy import expand, factor, rootof, GeneratorsNeeded
 
 from math_exo.utils import pretty_print_eq
 
+from math_exo.internationalization import *
+
 
 def sym_rand_int(max_coeff):
     return randrange(-max_coeff, max_coeff)
@@ -14,21 +16,12 @@ def sym_rand_int(max_coeff):
 
 class CalculusProblem():
     """Abstract calculus problem"""
-    equation: str = "Equation"
-    solutions: str = "Solutions"
-    fonction: str = "Fonction"
-    derivee: str = "Dérivée"
-    factorisation: str = "Factorisation"
-    developpement: str = "Développement"
-    header: List[str] = [equation, solutions]
+    header: List[Mapping] = [equation_, solutions_]
+    exercise:Mapping[str, str] = solve_
+    expr=""
     degree = 1
-    section_name: str = ""
     x = Symbol("x", real=True)
     y = Symbol("y", real=True)
-
-    EXERCICE_TYPE:str=""
-    NAME: str = ""
-
 
     def __init__(self, min_coeff: int = -12, max_coeff: int = 12):
         self.min_coeff: int = min_coeff
@@ -61,9 +54,7 @@ class CalculusProblem():
 
 class ExpandFactorFindRoots(CalculusProblem):
     """Abstract expand find roots"""
-    EXERCICE_TYPE = ""
-    header: List[str] = [CalculusProblem.equation, CalculusProblem.factorisation, CalculusProblem.solutions]
-
+    header: List[str] = [equation_, factorization_, solutions_]
     expand_expr: bool = True
     """Weather to expand or factorize the generated expression"""
 
@@ -99,8 +90,9 @@ class ExpandFactorFindRoots(CalculusProblem):
 
 class DifferentiationProblem(CalculusProblem):
     """Abstract differenciation"""
-    header: List[str] = [CalculusProblem.fonction, CalculusProblem.derivee]
-    EXERCICE_TYPE = "Dérivation"
+
+    exercise = derivation_
+    header: List[str] = [function_, derivative_]
     @abstractmethod
     def _get_one_expr(self) -> Expr:
         return
