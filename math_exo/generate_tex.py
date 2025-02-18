@@ -34,8 +34,7 @@ def generate_table(problem: CalculusProblem, n_expr: int = 10):
     lines_question = []
 
     for i in range(n_expr):
-        out_exprs = problem.generate()
-        pretty_exprs = [pretty_print_eq(exp) for exp in out_exprs]
+        pretty_exprs = problem.pretty_print_eqs()
         lines_sol.append(pretty_exprs)
 
         line_quest = [pretty_exprs[0]] + [" "] * (len(problem.header) - 1)

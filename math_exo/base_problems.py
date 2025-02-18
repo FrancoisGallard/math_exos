@@ -5,6 +5,8 @@ from typing import List, Tuple
 from sympy import Expr, Symbol, diff, latex
 from sympy import expand, factor, rootof, GeneratorsNeeded
 
+from math_exo.utils import pretty_print_eq
+
 
 def sym_rand_int(max_coeff):
     return randrange(-max_coeff, max_coeff)
@@ -26,6 +28,7 @@ class CalculusProblem():
 
     EXERCICE_TYPE:str=""
     NAME: str = ""
+
 
     def __init__(self, min_coeff: int = -12, max_coeff: int = 12):
         self.min_coeff: int = min_coeff
@@ -49,6 +52,11 @@ class CalculusProblem():
             except GeneratorsNeeded:
                 err = True
         return out
+
+    def pretty_print_eqs(self, equations=None):
+        if equations is None:
+            equations=self.generate()
+        return [pretty_print_eq(exp) for exp in equations]
 
 
 class ExpandFactorFindRoots(CalculusProblem):

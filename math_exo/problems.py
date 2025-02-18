@@ -6,7 +6,7 @@ from typing import List, Tuple
 import inspect
 import sys
 
-from sympy import Expr, expand, Integer, latex, solve_univariate_inequality
+from sympy import Expr, expand, Integer, latex
 from sympy import factor, sqrt, solve
 from sympy.polys.specialpolys import random_poly
 from sympy.solvers.inequalities import reduce_rational_inequalities
@@ -84,6 +84,7 @@ class RationalFuncEq(ExpandFactorFindRoots):
     EXERCICE_TYPE = "Factoriser et résoudre"
     degree = 1
     header = [ExpandFactorFindRoots.equation, "Valeurs interdites", ExpandFactorFindRoots.solutions]
+    
 
     def _generate(self) -> Tuple[Expr, Expr, Expr]:
         x = self.x
@@ -140,8 +141,10 @@ class DiffPolyExp(DifferentiationProblem):
 
 class DiffPolyFracDeg1(DifferentiationProblem):
     """d/dx (a.x**3 + b.x**2 + c.x + d )(e.x + f )"""
+    
+
     def _get_one_expr(self) -> Expr:
-        num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        num = random_poly(self.x, 3, inf=self.min_coeff, sup=self.max_coeff)
         den = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
 
         return (num / den)
@@ -149,6 +152,8 @@ class DiffPolyFracDeg1(DifferentiationProblem):
 
 class DiffPolyFrac(DifferentiationProblem):
     """d/dx (a.x**3 + b.x**2 + c.x +d )/(e.x + f)"""
+    
+
     def _get_one_expr(self) -> Expr:
         n1 = randint(2, 3)
         num = random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
@@ -160,6 +165,8 @@ class DiffPolyFrac(DifferentiationProblem):
 
 class DiffPolyFracSqrt(DifferentiationProblem):
     """d/dx sqrt(a.x**3 + b.x**2 + c.x + d )"""
+    
+
     def _get_one_expr(self) -> Expr:
         n1 = randint(2, 3)
         num = random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
@@ -168,11 +175,15 @@ class DiffPolyFracSqrt(DifferentiationProblem):
 
 class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
     """d/dx sqrt(a.x**3 + b.x**2 + c.x +d ) ** (-1 ou 1)"""
+    print_large=True
 
     def _get_one_expr(self) -> Expr:
         expr = super(DiffPolyFracSqrtInv, self)._get_one_expr()
         pow_p = 1 if random.random() < 0.5 else -1
+
         return expr ** pow_p
+
+
 
 
 class CanonicalPoly2(CalculusProblem):
@@ -194,7 +205,7 @@ class CanonicalPoly2(CalculusProblem):
 
 class LinearSystem2eqs(CalculusProblem):
     """Résoudre {a.x+b.y = c ; d.x+e.y = f}"""
-
+    
     header = ["Equations", "Solutions"]
 
     def _generate(self) -> Tuple[Expr, List[Expr]]:
