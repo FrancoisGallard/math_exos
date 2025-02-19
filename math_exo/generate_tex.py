@@ -1,11 +1,11 @@
 import shutil
 from io import StringIO
-
+from typing import List
+from random import choice
 import latextable
 from texttable import Texttable
 
 from math_exo.base_problems import CalculusProblem
-from math_exo.utils import pretty_print_eq
 
 
 def latexify_table(lines, headers):
@@ -29,16 +29,23 @@ def latexify_table(lines, headers):
     return latex_quest
 
 
-def generate_table(problem: CalculusProblem, header, n_expr: int = 10):
+
+def generate_table(problem: CalculusProblem |List[CalculusProblem], header, n_expr: int = 10, shuffle=False):
     lines_sol = []
     lines_question = []
 
-    for i in range(n_expr):
-        pretty_exprs = problem.pretty_print_eqs()
+    def _add_pb(pb):
+        pretty_exprs = pb.pretty_print_eqs()
         lines_sol.append(pretty_exprs)
-
         line_quest = [pretty_exprs[0]] + [" "] * (len(header) - 1)
         lines_question.append(line_quest)
+
+    if shuffle:
+        for i in range(n_expr):
+            _add_pb(choice(problem))
+    else:
+        for i in range(n_expr):
+            _add_pb(problem)
 
     latex_sol = latexify_table(lines_sol, header)
     latex_quest = latexify_table(lines_question, header)

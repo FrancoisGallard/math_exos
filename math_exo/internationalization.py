@@ -25,6 +25,9 @@ solve_: Mapping[str,str] = {FR:"Résoudre", EN:"Solve"}
 
 calculus_exercises_: Mapping[str,str] = {FR:"Exercices de calcul littéral", EN:"Calculus exercises"}
 math_exercises_: Mapping[str,str] = {FR:'Exercices de mathématiques', EN:"Mathematics exercises"}
+shuffle_problems_: Mapping[str,str] = {FR:"Mélanger les problèmes", EN:"Shuffle problems"}
+problems_mismatch_: Mapping[str,str] = {FR:"Les problèmes sélectionnés n'ont pas tous la même entête, c'est incompatbile avec l'option de 'Mélanger les problèmes'",
+                                       EN:"All selected problems don't have the same header, this is incompatible with the 'Shuffle problems' option."}
 select_exercises_: Mapping[str,str] = {FR:'Sélection des exercices' , EN:"Select exercises"}
 exercises_list_: Mapping[str,str] = {FR:"Liste des exercices" , EN:"Exercises list"}
 num_eqs_per_table_: Mapping[str,str] = {FR:"Nombre d'équations par table", EN:"Number of equations per table"}
