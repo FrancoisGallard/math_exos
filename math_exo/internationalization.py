@@ -1,35 +1,52 @@
 from typing import Mapping, Final
+import glob, os
+from pathlib import Path
 
-FR:Final[str]="fr"
-EN:Final[str]="en"
+babel_dir=Path(__file__).parent/"babel"
+languages_files=glob.glob("*.txt", root_dir=babel_dir)
+ALL_LANGUAGES = [l.replace(".txt",'') for l in languages_files]
 
-equation_: Mapping[str,str] =  {FR:"Equation", EN:"Equation"}
-equations_: Mapping[str,str] =  {FR:"Equations", EN:"Equations"}
-solutions_: Mapping[str,str] = {FR:"Solutions", EN:"Solutions"}
-function_: Mapping[str,str] ={FR:"Fonction", EN:"Function"}
-derivative_: Mapping[str,str] = {FR:"Dérivée", EN:"Derivative"}
-factorization_: Mapping[str,str] = {FR:"Factorisation", EN:"Factorization"}
-expansion_: Mapping[str,str] = {FR:"Développement", EN:"Expansion"}
-expand_: Mapping[str,str] = {FR:"Développer", EN:"Expand"}
+def read_lang(language):
+    with open(babel_dir/(language+".txt"),"r", encoding="utf8") as inf:
+        lines= inf.readlines()
+        for i, l in enumerate(lines):
+            lines[i]=l.replace("\n","")
+        return lines
 
-derivation_: Mapping[str,str] = {FR:"Dérivation", EN:"Derivative"}
-forbidden_values_: Mapping[str,str] = {FR:"Valeurs interdites", EN:"Forbidden values"}
+TRANSLATIONS={lang:read_lang(lang) for lang in ALL_LANGUAGES}
 
-factor_solve_:Mapping[str,str] = {FR:"Factoriser et résoudre", EN:"Factorize and solve"}
-expand_solve_:Mapping[str,str] = {FR:"Développer et résoudre", EN:"Expand and solve"}
 
-polynomial_: Mapping[str,str] = {FR:"Polynome", EN:"Polynomial"}
-canonical_: Mapping[str,str] = {FR:"Forme canonique", EN:"Canonical form"}
+def get_trans_map(index):
+    return {lang:TRANSLATIONS[lang][index] for  lang in  ALL_LANGUAGES}
 
-solve_: Mapping[str,str] = {FR:"Résoudre", EN:"Solve"}
+equation_: Mapping[str,str] = get_trans_map(0)
+equations_: Mapping[str,str] = get_trans_map(1)
+solutions_: Mapping[str,str] = get_trans_map(2)
+function_: Mapping[str,str] = get_trans_map(3)
+derivative_: Mapping[str,str] = get_trans_map(4)
+factorization_: Mapping[str,str] =  get_trans_map(5)
+expansion_: Mapping[str,str] = get_trans_map(6)
+expand_: Mapping[str,str] = get_trans_map(7)
 
-calculus_exercises_: Mapping[str,str] = {FR:"Exercices de calcul littéral", EN:"Calculus exercises"}
-math_exercises_: Mapping[str,str] = {FR:'Exercices de mathématiques', EN:"Mathematics exercises"}
-shuffle_problems_: Mapping[str,str] = {FR:"Mélanger les problèmes", EN:"Shuffle problems"}
-problems_mismatch_: Mapping[str,str] = {FR:"Les problèmes sélectionnés n'ont pas tous la même entête, c'est incompatbile avec l'option de 'Mélanger les problèmes'",
-                                       EN:"All selected problems don't have the same header, this is incompatible with the 'Shuffle problems' option."}
-select_exercises_: Mapping[str,str] = {FR:'Sélection des exercices' , EN:"Select exercises"}
-exercises_list_: Mapping[str,str] = {FR:"Liste des exercices" , EN:"Exercises list"}
-num_eqs_per_table_: Mapping[str,str] = {FR:"Nombre d'équations par table", EN:"Number of equations per table"}
-generate_code_: Mapping[str,str] = {FR:'Générer le code LateX et le compiler' , EN:"Generate LateX code and compile"}
-open_overleaf_: Mapping[str,str] = {FR:"Ouvrir dans Overleaf pour compiler" , EN:"Open Overleaf to compile"}
+derivation_: Mapping[str,str] = get_trans_map(8)
+forbidden_values_: Mapping[str,str] =  get_trans_map(9)
+
+factor_solve_:Mapping[str,str] =  get_trans_map(10)
+expand_solve_:Mapping[str,str] =  get_trans_map(11)
+
+polynomial_: Mapping[str,str] =  get_trans_map(12)
+canonical_: Mapping[str,str] =  get_trans_map(13)
+
+solve_: Mapping[str,str] =  get_trans_map(14)
+
+calculus_exercises_: Mapping[str,str] =  get_trans_map(15)
+math_exercises_: Mapping[str,str] =  get_trans_map(16)
+shuffle_problems_: Mapping[str,str] = get_trans_map(17)
+problems_mismatch_: Mapping[str,str] =  get_trans_map(18)
+select_exercises_: Mapping[str,str] =  get_trans_map(19)
+exercises_list_: Mapping[str,str] = get_trans_map(20)
+num_eqs_per_table_: Mapping[str,str] =  get_trans_map(21)
+generate_code_: Mapping[str,str] =  get_trans_map(22)
+open_overleaf_: Mapping[str,str] =  get_trans_map(23)
+
+

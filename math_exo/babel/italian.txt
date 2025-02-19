@@ -1,0 +1,24 @@
+Equazione
+Equazioni
+Soluzioni
+Funzione
+Derivata
+Fattorizzazione
+Espansione
+Espansione
+Derivata
+Valori proibiti
+Fattorizzare e risolvere
+Espandere e risolvere
+Polinomio
+Forma canonica
+Risolvere
+Esercizi di calcolo
+Esercizi di matematica
+Mischia i problemi
+Tutti i problemi selezionati non hanno la stessa intestazione, questo è incompatibile con l'opzione “Mischia i problemi”.
+Selezionare gli esercizi
+Elenco degli esercizi
+Numero di equazioni per tabella
+Generare il codice LateX e compilare
+Aprire Overleaf per compilare

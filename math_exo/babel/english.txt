@@ -1,0 +1,24 @@
+Equation
+Equations
+Solutions 
+Function
+Derivative
+Factorization
+Expansion
+Expand
+Derivative
+Forbidden values
+Factorize and solve
+Expand and solve
+Polynomial
+Canonical form
+Solve
+Calculus exercises
+Mathematics exercises
+Shuffle problems
+All selected problems don't have the same header, this is incompatible with the 'Shuffle problems' option.
+Select exercises
+Exercises list
+Number of equations per table
+Generate LateX code and compile
+Open Overleaf to compile

@@ -8,7 +8,7 @@ from itertools import groupby
 
 st.set_page_config(page_title="Exercices de mathématiques")
 
-language=st.selectbox("Language", [FR, EN], 0)
+language=st.selectbox("Language", ALL_LANGUAGES, ALL_LANGUAGES.index("french"))
 
 def _(to_translate):
     if isinstance(to_translate,dict):

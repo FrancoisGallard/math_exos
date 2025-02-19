@@ -1,0 +1,24 @@
+Gleichung
+Gleichungen
+Lösungen
+Funktion
+Ableitung
+Faktorisierung
+Erweiterung
+Erweitern
+Ableitung
+Verbotene Werte
+Faktorisieren und lösen
+Erweitern und Lösen
+Polynom
+Kanonische Form
+Lösen von
+Übungen zu Calculus
+Mathematische Übungen
+Probleme mischen
+Alle ausgewählten Aufgaben haben nicht die gleiche Überschrift, dies ist nicht kompatibel mit der Option 'Mischen der Aufgaben'.
+Übungen auswählen
+Liste der Übungen
+Anzahl der Gleichungen pro Tabelle
+LateX-Code generieren und kompilieren
+Overleaf zum Kompilieren öffnen

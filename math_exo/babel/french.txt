@@ -1,0 +1,24 @@
+Équation
+Equations
+Solutions
+Fonction
+Dérivée
+Factorisation
+Développement
+Développer
+Dérivée
+Valeurs interdites
+Factoriser et résoudre
+Développer et résoudre
+Polynôme
+Forme canonique
+Résoudre
+Exercices de calcul
+Exercices de mathématiques
+Mélanger les problèmes
+Tous les problèmes sélectionnés n'ont pas le même en-tête, ceci est incompatible avec l'option 'Mélanger les problèmes'.
+Sélectionner les exercices
+Liste des exercices
+Nombre d'équations par tableau
+Générer le code LateX et compiler
+Ouvrir Overleaf pour compiler

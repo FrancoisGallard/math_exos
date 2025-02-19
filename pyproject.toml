@@ -16,3 +16,6 @@ dependencies = [
 Homepage = "https://github.com/FrancoisGallard/math_exos"
 Changelog = "https://github.com/FrancoisGallard/math_exos/releases"
 Issues = "https://github.com/FrancoisGallard/math_exos/issues"
+
+[tool.setuptools.package-data]
+mypkg = ["*.txt", "*.rst"]
