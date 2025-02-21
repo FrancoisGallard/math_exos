@@ -281,7 +281,7 @@ class Inequalities2Lin(CalculusProblem):
         return equation_str, solutions_str
 
 class InequalitiesProd2Lin(CalculusProblem):
-    expr = "(a.x + b)(c.x + d) <= 0"
+    expr = "(a.x + b)(c.x + d) <= | >= 0"
     exercise = solve_
 
     def _generate(self) -> Tuple[str, str]:
@@ -290,7 +290,58 @@ class InequalitiesProd2Lin(CalculusProblem):
             coeffs[0]+=1
         left = coeffs[0]*self.x + coeffs[1]
         right = coeffs[2]*self.x + coeffs[3]
-        equation= left * right <= 0
+        sign = randint(0, 1)
+        if sign:
+            equation = left * right <= 0
+        else:
+            equation = left * right >= 0
+
+        solutions=reduce_rational_inequalities([[equation]], self.x)
+        solutions_str ="$ "+latex(solutions)+" $"
+        solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+        equation_str = "$ "+latex(equation)+r" $"
+
+        return equation_str, solutions_str
+
+class InequalitiesProd2LinK(CalculusProblem):
+    expr = "(a.x + b)(c.x + d) <= | >= k"
+    exercise = solve_
+
+    def _generate(self) -> Tuple[str, str]:
+        coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(5)]
+        if coeffs[0]==coeffs[2]==0:
+            coeffs[0]+=1
+
+        left = coeffs[0]*self.x + coeffs[1]
+        right = coeffs[2]*self.x + coeffs[3]
+        sign = randint(0, 1)
+        if sign:
+            equation= left * right <= coeffs[4]
+        else:
+            equation = left * right >= coeffs[4]
+        solutions=reduce_rational_inequalities([[equation]], self.x)
+        solutions_str ="$ "+latex(solutions)+" $"
+        solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+        equation_str = "$ "+latex(equation)+r" $"
+
+        return equation_str, solutions_str
+
+class InequalitiesDivLinK(CalculusProblem):
+    expr = "(a.x + b)/(c.x + d) <= | >= k"
+    exercise = solve_
+
+    def _generate(self) -> Tuple[str, str]:
+        coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(5)]
+        if coeffs[0]==coeffs[2]==0:
+            coeffs[0]+=1
+
+        left = coeffs[0]*self.x + coeffs[1]
+        right = coeffs[2]*self.x + coeffs[3]
+        sign = randint(0, 1)
+        if sign:
+            equation= left / right <= coeffs[4]
+        else:
+            equation = left / right >= coeffs[4]
         solutions=reduce_rational_inequalities([[equation]], self.x)
         solutions_str ="$ "+latex(solutions)+" $"
         solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
