@@ -7,7 +7,7 @@ import inspect
 import sys
 
 from sympy import Expr, expand, Integer, latex
-from sympy import factor, sqrt, solve
+from sympy import factor, sqrt, solve, exp
 from sympy.polys.specialpolys import random_poly
 from sympy.solvers.inequalities import reduce_rational_inequalities
 
@@ -187,6 +187,42 @@ class DiffPolyFracSqrtInv(DifferentiationProblem):
         num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
         return 1/sqrt(num)
 
+
+class DiffPolySqrt(DifferentiationProblem):
+    expr="sqrt(x)*(a.x**2+ b.x + c)"
+
+    def _get_one_expr(self) -> Expr:
+        num = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
+
+        return sqrt(self.x)*num
+
+class DiffPolySqrtPoly(DifferentiationProblem):
+    expr="sqrt(a.x+b)*(c.x**2+ d.x + e)"
+
+    def _get_one_expr(self) -> Expr:
+        num = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
+        sqp = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+
+        return sqrt(sqp)*num
+
+class DiffPolySqrtPoly3(DifferentiationProblem):
+    expr="sqrt(a.x+b)*(c.x**3+ d.x**2 + e.x + f)"
+
+    def _get_one_expr(self) -> Expr:
+        num = random_poly(self.x, 3, inf=self.min_coeff, sup=self.max_coeff)
+        sqp = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+
+        return sqrt(sqp)*num
+
+
+class DiffPolyExpPoly(DifferentiationProblem):
+    expr = "exp(a.x+b)*(c.x**2+ d.x + e)"
+
+    def _get_one_expr(self) -> Expr:
+        num = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
+        sqp = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+
+        return exp(sqp) * num
 
 class CanonicalPoly2(CalculusProblem):
     expr="a.x²+b.x+c"
