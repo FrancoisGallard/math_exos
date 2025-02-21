@@ -151,38 +151,41 @@ class DiffPolyFracDeg1(DifferentiationProblem):
 
         return (num / den)
 
-
 class DiffPolyFrac(DifferentiationProblem):
-    expr="(a.x**3 + b.x**2 + c.x +d )/(e.x + f)"
-    
+    expr="(a.x**2 + b.x + c )/(e.x + f)**p"
 
     def _get_one_expr(self) -> Expr:
-        n1 = randint(2, 3)
-        num = random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
+        num = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
         den = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
 
         p = randint(2, 9)
-        return (num / den) ** p
 
+        return num / (den**p)
+
+class DiffPolyFrac2(DifferentiationProblem):
+    expr="(a.x + b )**p/(c.x**2+ d.x + e)"
+
+    def _get_one_expr(self) -> Expr:
+        num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        den = random_poly(self.x, 2, inf=self.min_coeff, sup=self.max_coeff)
+
+        p = randint(2, 9)
+        return num**p / den
 
 class DiffPolyFracSqrt(DifferentiationProblem):
     expr="sqrt(a.x**3 + b.x**2 + c.x + d )"
-    
 
     def _get_one_expr(self) -> Expr:
         n1 = randint(2, 3)
         num = random_poly(self.x, n1, inf=self.min_coeff, sup=self.max_coeff)
         return sqrt(num)
 
-
-class DiffPolyFracSqrtInv(DiffPolyFracSqrt):
-    expr="sqrt(a.x**3 + b.x**2 + c.x +d ) ** (-1 ou 1)"
+class DiffPolyFracSqrtInv(DifferentiationProblem):
+    expr="1/sqrt(a.x + b)"
 
     def _get_one_expr(self) -> Expr:
-        expr = super(DiffPolyFracSqrtInv, self)._get_one_expr()
-        pow_p = 1 if random.random() < 0.5 else -1
-
-        return expr ** pow_p
+        num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        return 1/sqrt(num)
 
 
 class CanonicalPoly2(CalculusProblem):
