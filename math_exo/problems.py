@@ -11,9 +11,9 @@ from sympy import factor, sqrt, solve, exp
 from sympy.polys.specialpolys import random_poly
 from sympy.solvers.inequalities import reduce_rational_inequalities
 
-from math_exo.base_problems import CalculusProblem
+from math_exo.base_problems import CalculusProblem, FuncVariations
 from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, DifferentiationProblem
-from math_exo.utils import pretty_print_eq
+from math_exo.utils import pretty_print_eq, get_roots
 
 from math_exo.internationalization import *
 
@@ -44,7 +44,7 @@ class IdentiteRemarquable(ExpandFactorFindRoots):
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
         exp = self._get_one_expr()
         expanded = expand(exp)
-        roots = self.get_roots(exp)
+        roots = get_roots(exp, self.degree)
         return exp, expanded, roots
 
 
@@ -77,7 +77,7 @@ class FactorEqsTwoLin(ExpandFactorFindRoots):
         exp = f'{pretty_print_eq(left)} = {pretty_print_eq(right)}'
         exp_sol = left - right
         fact = factor(exp_sol)
-        roots = self.get_roots(exp_sol)
+        roots = get_roots(exp_sol, self.degree)
         return exp, fact, roots
 
 
@@ -113,7 +113,7 @@ class ProdTwoLins(ExpandFactorFindRoots):
         left = a * x + b
         right = c * x + d
         exp_sol = left * right
-        roots = self.get_roots(exp_sol)
+        roots = get_roots(exp_sol, self.degree)
         exp_txt=latex(exp_sol)+" = 0"
         return exp_txt, roots
 
@@ -348,6 +348,12 @@ class InequalitiesDivLinK(CalculusProblem):
         equation_str = "$ "+latex(equation)+r" $"
 
         return equation_str, solutions_str
+
+class VarSecOrderPoly(FuncVariations):
+    expr = "(a.x² + bx + c)"
+    degree = 2
+    def _get_one_expr(self):
+        return random_poly(self.x, self.degree, inf=self.min_coeff, sup=self.max_coeff)
 
 predicate = lambda x: inspect.isclass(x) and issubclass(x, CalculusProblem)
 ALL_PROBLEMS = [i[1] for i in inspect.getmembers(sys.modules[__name__], predicate) if i[1].expr]

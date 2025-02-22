@@ -22,3 +22,4 @@ Liste des exercices
 Nombre d'équations par tableau
 Générer le code LateX et compiler
 Ouvrir Overleaf pour compiler
+Variations

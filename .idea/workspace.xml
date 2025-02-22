@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77480ddf-e54f-4b48-9048-5a659cd55a75" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/arabic.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/arabic.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/chinease.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/chinease.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/english.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/english.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/french.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/french.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/german.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/german.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/italian.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/italian.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/babel/polish.txt" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/babel/polish.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/base_problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/base_problems.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/internationalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/internationalization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_exo/problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/problems.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,19 +42,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.base_problems.executor&quot;: &quot;Run&quot;,
-    &quot;Python.internationalization.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.problems.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.base_problems.executor": "Run",
+    "Python.internationalization.executor": "Run",
+    "Python.main (1).executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.problems.executor": "Run",
+    "Python.utils.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\francois.gallard\Documents\workspace_pycharm\math_exo\math_exo\babel" />
@@ -52,7 +64,7 @@
       <recent name="C:\Users\francois.gallard\Documents\workspace_pycharm\math_exo\src\math_exo" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.internationalization">
+  <component name="RunManager" selected="Python.utils">
     <configuration name="base_problems" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="math_exo" />
       <option name="ENV_FILES" value="" />
@@ -119,28 +131,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="math_exo" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\francois.gallard\Documents\workspace_pycharm\math_exo\examples\main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="problems" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="math_exo" />
       <option name="ENV_FILES" value="" />
@@ -163,13 +153,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="math_exo" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/math_exo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/math_exo/utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.utils" />
         <item itemvalue="Python.internationalization" />
         <item itemvalue="Python.problems" />
         <item itemvalue="Python.base_problems" />
         <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>

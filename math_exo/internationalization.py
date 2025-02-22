@@ -48,5 +48,5 @@ exercises_list_: Mapping[str,str] = get_trans_map(20)
 num_eqs_per_table_: Mapping[str,str] =  get_trans_map(21)
 generate_code_: Mapping[str,str] =  get_trans_map(22)
 open_overleaf_: Mapping[str,str] =  get_trans_map(23)
-
+variations_: Mapping[str,str] =  get_trans_map(24)
 

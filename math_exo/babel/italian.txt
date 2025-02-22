@@ -22,3 +22,4 @@ Elenco degli esercizi
 Numero di equazioni per tabella
 Generare il codice LateX e compilare
 Aprire Overleaf per compilare
+Variations

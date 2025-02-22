@@ -22,3 +22,4 @@
 每个表格的方程数
 生成 LateX 代码并编译
 打开 Overleaf 进行编译
+Variations

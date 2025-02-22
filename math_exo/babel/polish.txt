@@ -22,3 +22,4 @@ Lista de exercícios
 Número de equações por tabela
 Gerar código LateX e compilar
 Otwórz Overleaf, aby skompilować
+Variations
