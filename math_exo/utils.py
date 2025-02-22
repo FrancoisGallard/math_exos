@@ -24,7 +24,8 @@ def get_roots(expr,degree, as_tex=True ):
     return roots
 
 def variation_table(x_values, df_values, max_values, f_variations, min_values):
-    out=r"$\n\begin{array}{|c|ccccr|}\n"
+    cols="c"*(len(df_values)-1)+"r"
+    out=r"$\n\begin{array}{|c|"+cols+r"|}\n"
     out+=fr"""\n 
 \hline \n 
 x     & {"&".join(x_values)} \\ \hline \n 
@@ -35,7 +36,6 @@ f(x) & {"&".join(f_variations)} \\ \n
 \hline \n 
 """
     out+=r"\end{array}\n$"
-    print("Out = ",out)
     return out
 
 # print(variation_table(x_values=[r"-\infty", " ", "0", " ", r"+\infty"],
