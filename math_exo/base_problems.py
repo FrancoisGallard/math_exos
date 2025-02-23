@@ -5,6 +5,8 @@ from typing import List, Tuple
 from sympy import Expr, Symbol, diff, latex
 from sympy import expand, factor, rootof, GeneratorsNeeded
 from sympy import oo
+from sympy.logic.boolalg import BooleanTrue, BooleanFalse
+
 from math_exo.utils import pretty_print_eq, get_roots, variation_table
 
 from math_exo.internationalization import *
@@ -51,6 +53,17 @@ class CalculusProblem():
             equations=self.generate()
         return [pretty_print_eq(exp) for exp in equations]
 
+    def _check_eq_sol(self,equation, solutions):
+        if  equation==  BooleanTrue() or  equation==  BooleanFalse():
+            raise GeneratorsNeeded()
+        if solutions== BooleanTrue() or solutions== BooleanFalse():
+            if solutions ==  BooleanTrue():
+                solutions_str = r"$x \in {\rm I\!R}$"
+            else:
+                solutions_str = r"$x \in \O$"
+        else:
+            solutions_str=None
+        return solutions_str
 
 class ExpandFactorFindRoots(CalculusProblem):
     """Abstract expand find roots"""
@@ -103,9 +116,11 @@ class FuncVariations(CalculusProblem):
     def _generate(self) -> Tuple[Expr, str]:
         expression = self._get_one_expr()
         der = diff(expression, self.x)
-        roots = get_roots(der, degree=self.degree-1, as_tex=False)
-        #roots = [i for i in roots if i.is_real]
-
+        roots_m = get_roots(der, degree=self.degree-1, as_tex=False)
+        roots=[]
+        for r in roots_m:
+            if r not in roots:
+                roots.append(r)
         def sign_of_der(x_val):
             val= der.evalf(subs={self.x: x_val})
             if val==0.:
@@ -122,6 +137,10 @@ class FuncVariations(CalculusProblem):
 
             if i==len(roots)-1:
                 df_values.append(sign_of_der(roots[-1] + 1.))
+            else:
+                df_values.append(sign_of_der((r+roots[i+1])/2 ))
+        if not len(roots):# No roots, just get the constant sign of the derivative
+            df_values.append(sign_of_der(  0.))
         df_values .append(latex(der.limit(self.x, oo)))
 
         f_variations =[]
@@ -159,14 +178,6 @@ class FuncVariations(CalculusProblem):
             x_values += [" ", latex(r)]
         x_values += [" ", r"+\infty"]
 
-        print("************")
-        print("x_values",x_values,len(x_values))
-        print("df_values", df_values, len(df_values))
-        print("max_values", max_values, len(max_values))
-        print("f_variations", f_variations, len(f_variations))
-        print("min_values", min_values, len(min_values))
-        print("************")
-
         variations = variation_table(x_values, df_values, max_values, f_variations, min_values)
 
         return expression, variations
@@ -175,3 +186,4 @@ class FuncVariations(CalculusProblem):
         if equations is None:
             equations=self.generate()
         return [pretty_print_eq(equations[0]), equations[1]]
+

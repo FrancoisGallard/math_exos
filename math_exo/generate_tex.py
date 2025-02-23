@@ -14,7 +14,7 @@ def latexify_table(lines, headers):
     if len(headers) == 1:
         align = ["p{17cm}"]
     elif len(headers) == 2:
-        align = ["p{8cm}", "p{9cm}"]
+        align = ["p{6.5cm}", "p{10.5cm}"]
     elif len(headers) == 3:
         align = ["p{6cm}", "p{8cm}", "p{3cm}"]
     else:

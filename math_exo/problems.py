@@ -1,4 +1,3 @@
-import random
 from random import randint
 from random import randrange
 from typing import List, Tuple
@@ -276,8 +275,10 @@ class Inequalities2Lin(CalculusProblem):
         right = coeffs[2]*self.x + coeffs[3]
         equation= left <= right
         solutions=reduce_rational_inequalities([[equation]], self.x)
-        solutions_str="$ "+latex(solutions)+" $"
-        equation_str = "$ "+latex(left)+r" \leq "+latex(right)+" $"
+        solutions_str = self._check_eq_sol(equation, solutions)
+        if solutions_str is None:
+            solutions_str="$ "+latex(solutions)+" $"
+            equation_str = "$ "+latex(left)+r" \leq "+latex(right)+" $"
         return equation_str, solutions_str
 
 class InequalitiesProd2Lin(CalculusProblem):
@@ -296,9 +297,12 @@ class InequalitiesProd2Lin(CalculusProblem):
         else:
             equation = left * right >= 0
 
-        solutions=reduce_rational_inequalities([[equation]], self.x)
-        solutions_str ="$ "+latex(solutions)+" $"
-        solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+        solutions = reduce_rational_inequalities([[equation]], self.x)
+
+        solutions_str= self._check_eq_sol(equation, solutions)
+        if solutions_str is None:
+            solutions_str ="$ "+latex(solutions)+" $"
+            solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
         equation_str = "$ "+latex(equation)+r" $"
 
         return equation_str, solutions_str
@@ -319,10 +323,13 @@ class InequalitiesProd2LinK(CalculusProblem):
             equation= left * right <= coeffs[4]
         else:
             equation = left * right >= coeffs[4]
-        solutions=reduce_rational_inequalities([[equation]], self.x)
-        solutions_str ="$ "+latex(solutions)+" $"
-        solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
-        equation_str = "$ "+latex(equation)+r" $"
+
+        solutions = reduce_rational_inequalities([[equation]], self.x)
+        solutions_str = self._check_eq_sol(equation, solutions)
+        equation_str = "$ " + latex(equation) + r" $"
+        if solutions_str is None:
+            solutions_str ="$ "+latex(solutions)+" $"
+            solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
 
         return equation_str, solutions_str
 
@@ -343,8 +350,11 @@ class InequalitiesDivLinK(CalculusProblem):
         else:
             equation = left / right >= coeffs[4]
         solutions=reduce_rational_inequalities([[equation]], self.x)
-        solutions_str ="$ "+latex(solutions)+" $"
-        solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+
+        solutions_str = self._check_eq_sol(equation, solutions)
+        if solutions_str is None:
+            solutions_str ="$ "+latex(solutions)+" $"
+            solutions_str=solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
         equation_str = "$ "+latex(equation)+r" $"
 
         return equation_str, solutions_str

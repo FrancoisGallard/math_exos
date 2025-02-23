@@ -3,11 +3,13 @@ from sympy import latex, Expr, rootof
 
 def pretty_print_eq(eq: Expr | str):
     if isinstance(eq, Expr):
-        pretty = "$" + latex(eq) + "$"
+        pretty =  latex(eq)
     else:
         pretty=str(eq)
 
-    if r"\frac{"  in pretty:
+    if "$" not in pretty:
+        pretty = "$"+pretty+"$"
+    if r"\frac{"  in pretty and r"\begin{LARGE}" not in pretty:
         pretty= r"\begin{LARGE}" + pretty + r"\end{LARGE}"
     return pretty
 
@@ -36,11 +38,4 @@ f(x) & {"&".join(f_variations)} \\
 \hline 
 """
     out+=r"\end{array}"+"\n$"
-    print("out", out)
     return out
-
-# print(variation_table(x_values=[r"-\infty", " ", "0", " ", r"+\infty"],
-#                       df_values=["5", "+", "0", "-", "-10"],
-#                       max_values=[" ", " ", "10", " ", " "],
-#                       f_variations=[" ", r"\nearrow", " ", r"\searrow", " "],
-#                       min_values=[r"-\infty", " ", " ", " ", r"+\infty"]))
