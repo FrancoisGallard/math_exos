@@ -54,8 +54,8 @@ def generate_table(problem: CalculusProblem |List[CalculusProblem], header, n_ex
 
 def generate_latex_files(solution_tables, questions_tables, title):
     solution_buf, questions_buf = generate_files_content(solution_tables, questions_tables, title)
-    solution_file = open("solution.tex", 'w')
-    questions_file = open("questions.tex", 'w')
+    solution_file = open("solution.tex", 'w', encoding="utf8")
+    questions_file = open("questions.tex", 'w', encoding="utf8")
     try:
 
         solution_buf.seek(0)

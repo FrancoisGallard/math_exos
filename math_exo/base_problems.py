@@ -93,6 +93,7 @@ class FuncVariations(CalculusProblem):
     """Abstract functions variations"""
     degree = 1
     exercise = variations_
+    approx_f_root=False
     header: List[str] = [function_, variations_]
 
     @abstractmethod
@@ -103,6 +104,7 @@ class FuncVariations(CalculusProblem):
         expression = self._get_one_expr()
         der = diff(expression, self.x)
         roots = get_roots(der, degree=self.degree-1, as_tex=False)
+        #roots = [i for i in roots if i.is_real]
 
         def sign_of_der(x_val):
             val= der.evalf(subs={self.x: x_val})
@@ -126,7 +128,10 @@ class FuncVariations(CalculusProblem):
         max_values = []
         min_values = []
         f_values = [expression.limit(self.x, -oo)]
-        f_values+= [expression.subs(self.x, r) for r in roots]
+        if self.approx_f_root:
+            f_values+= [expression.evalf(n=3, subs={self.x: r}) for r in roots]
+        else:
+            f_values += [expression.subs( self.x, r) for r in roots]
         f_values+= [expression.limit(self.x, oo)]
         f_values_l=[latex(f) for f in f_values]
         p=0
@@ -153,6 +158,14 @@ class FuncVariations(CalculusProblem):
         for r in roots:
             x_values += [" ", latex(r)]
         x_values += [" ", r"+\infty"]
+
+        print("************")
+        print("x_values",x_values,len(x_values))
+        print("df_values", df_values, len(df_values))
+        print("max_values", max_values, len(max_values))
+        print("f_variations", f_variations, len(f_variations))
+        print("min_values", min_values, len(min_values))
+        print("************")
 
         variations = variation_table(x_values, df_values, max_values, f_variations, min_values)
 

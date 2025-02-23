@@ -349,9 +349,17 @@ class InequalitiesDivLinK(CalculusProblem):
 
         return equation_str, solutions_str
 
-class VarSecOrderPoly(FuncVariations):
+class VarSecOrderPolyDeg2(FuncVariations):
     expr = "(a.x² + bx + c)"
     degree = 2
+    approx_f_root = False
+    def _get_one_expr(self):
+        return random_poly(self.x, self.degree, inf=self.min_coeff, sup=self.max_coeff)
+
+class VarSecOrderPolyDeg3(FuncVariations):
+    expr = "(a.x**3 + bx² + c.x +d)"
+    degree = 3
+    approx_f_root = True
     def _get_one_expr(self):
         return random_poly(self.x, self.degree, inf=self.min_coeff, sup=self.max_coeff)
 

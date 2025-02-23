@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="77480ddf-e54f-4b48-9048-5a659cd55a75" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_exo/base_problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/base_problems.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/generate_tex.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/generate_tex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/problems.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_exo/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +58,7 @@
       <recent name="C:\Users\francois.gallard\Documents\workspace_pycharm\math_exo\src\math_exo" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.utils">
+  <component name="RunManager" selected="Python.main (1)">
     <configuration name="base_problems" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="math_exo" />
       <option name="ENV_FILES" value="" />
@@ -168,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.utils" />
         <item itemvalue="Python.internationalization" />
         <item itemvalue="Python.problems" />
         <item itemvalue="Python.base_problems" />
-        <item itemvalue="Python.main (1)" />
       </list>
     </recent_temporary>
   </component>

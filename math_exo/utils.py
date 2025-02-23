@@ -16,7 +16,8 @@ def get_roots(expr,degree, as_tex=True ):
     for i in range(degree):
         try:
             root = rootof(expr, i)
-            roots.append(root)
+            if root.is_real:
+                roots.append(root)
         except:
             pass
     if as_tex:
@@ -25,17 +26,17 @@ def get_roots(expr,degree, as_tex=True ):
 
 def variation_table(x_values, df_values, max_values, f_variations, min_values):
     cols="c"*(len(df_values)-1)+"r"
-    out=r"$\n\begin{array}{|c|"+cols+r"|}\n"
-    out+=fr"""\n 
-\hline \n 
-x     & {"&".join(x_values)} \\ \hline \n 
-f'(x) & {"&".join(df_values)}  \\ \hline \n 
-      & {"&".join(max_values)}  \\ \n 
-f(x) & {"&".join(f_variations)} \\ \n 
-     & {"&".join(min_values)}     \\ \n 
-\hline \n 
+    out="\n$" +r"\begin{array}{|c|"+cols+r"|}"+"\n"
+    out+=fr"""\hline 
+x     & {"&".join(x_values)} \\ \hline 
+f'(x) & {"&".join(df_values)}  \\ \hline 
+      & {"&".join(max_values)}  \\ 
+f(x) & {"&".join(f_variations)} \\ 
+     & {"&".join(min_values)}     \\ 
+\hline 
 """
-    out+=r"\end{array}\n$"
+    out+=r"\end{array}"+"\n$"
+    print("out", out)
     return out
 
 # print(variation_table(x_values=[r"-\infty", " ", "0", " ", r"+\infty"],
