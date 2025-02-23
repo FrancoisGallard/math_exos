@@ -1,4 +1,4 @@
-from sympy import latex, Expr, rootof
+from sympy import latex, Expr, rootof, oo
 
 
 def pretty_print_eq(eq: Expr | str):
@@ -13,12 +13,12 @@ def pretty_print_eq(eq: Expr | str):
         pretty= r"\begin{LARGE}" + pretty + r"\end{LARGE}"
     return pretty
 
-def get_roots(expr,degree, as_tex=True ):
+def get_roots(expr, degree, as_tex=True, l_b =-oo, u_b=oo):
     roots = []
     for i in range(degree):
         try:
             root = rootof(expr, i)
-            if root.is_real:
+            if root.is_real and root>l_b and root<u_b:
                 roots.append(root)
         except:
             pass

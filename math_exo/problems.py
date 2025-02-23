@@ -5,8 +5,8 @@ from typing import List, Tuple
 import inspect
 import sys
 
-from sympy import Expr, expand, Integer, latex
-from sympy import factor, sqrt, solve, exp
+from sympy import Expr, expand, Integer, latex, diff
+from sympy import factor, sqrt, solve, exp, oo
 from sympy.polys.specialpolys import random_poly
 from sympy.solvers.inequalities import reduce_rational_inequalities
 
@@ -372,6 +372,32 @@ class VarSecOrderPolyDeg3(FuncVariations):
     approx_f_root = True
     def _get_one_expr(self):
         return random_poly(self.x, self.degree, inf=self.min_coeff, sup=self.max_coeff)
+
+class VarFirstOrderPolyRatioSqrt(FuncVariations):
+    expr = "(a.x + b)/sqrt(c.x + d)"
+    degree = 1
+    approx_f_root = True
+
+    def _get_bounds_validity(self):
+        if self.c>0:
+            return -self.d/self.c, oo
+        return -oo, -self.d / self.c
+
+    def _get_der_sign_expr(self, expr)->Expr:
+        # d/dx = (a.c.x+2 a. d - b.c) / 2(c.x+d)**2/3
+        return self.a*self.c*self.x+2*self.a*self.d-self.b*self.c
+
+    def _get_one_expr(self):
+        self.a, self.b, self.c, self.d = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(4)]
+        if self.a ==0:
+            self.a=2
+        if self.c ==0:
+            self.c=5
+        if self.a/self.c == self.b/self.d :# Expr degenerates in sqrt(a/c.x+b/d)
+            self.b+=1
+        self.num = self.a*self.x + self.b
+        self.den = self.c*self.x + self.d
+        return self.num/sqrt(self.den)
 
 predicate = lambda x: inspect.isclass(x) and issubclass(x, CalculusProblem)
 ALL_PROBLEMS = [i[1] for i in inspect.getmembers(sys.modules[__name__], predicate) if i[1].expr]

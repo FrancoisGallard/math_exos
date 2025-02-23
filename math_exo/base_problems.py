@@ -3,8 +3,10 @@ from random import randrange
 from typing import List, Tuple
 
 from sympy import Expr, Symbol, diff, latex
-from sympy import expand, factor, rootof, GeneratorsNeeded
+from sympy import degree as get_degree
+from sympy import expand, factor, GeneratorsNeeded
 from sympy import oo
+from sympy.core.mul import Mul
 from sympy.logic.boolalg import BooleanTrue, BooleanFalse
 
 from math_exo.utils import pretty_print_eq, get_roots, variation_table
@@ -113,10 +115,27 @@ class FuncVariations(CalculusProblem):
     def _get_one_expr(self) -> Expr:
         return
 
+    def _get_bounds_validity(self):
+        return -oo, oo
+
+    def _get_der_sign_expr(self, expr)->Expr:
+        return diff(expr, self.x)
+
+    def _real_lim(self, expr:Expr, val:float):
+        if not self.x in expr.free_symbols:
+            return expr
+        lim=expr.limit(self.x, val, dir="+")
+        if isinstance(lim, Mul):#  -oo*I or +oo*I
+            lim = expr.limit(self.x, val, dir="-")
+        return lim
+
     def _generate(self) -> Tuple[Expr, str]:
         expression = self._get_one_expr()
-        der = diff(expression, self.x)
-        roots_m = get_roots(der, degree=self.degree-1, as_tex=False)
+        der = self._get_der_sign_expr(expression)
+
+        l_b, u_b = self._get_bounds_validity()
+        roots_m = get_roots(der, degree=get_degree(der, gen=self.x), as_tex=False, l_b=l_b, u_b=u_b)
+
         roots=[]
         for r in roots_m:
             if r not in roots:
@@ -128,7 +147,7 @@ class FuncVariations(CalculusProblem):
             elif val>0:
                 return "+"
             return "-"
-        df_values=[latex(der.limit(self.x, -oo))]
+        df_values=[latex( self._real_lim(der, l_b)  )]
         for i, r in enumerate(roots):
             if i==0:
                 df_values.append(sign_of_der(roots[0] - 1.))
@@ -140,18 +159,18 @@ class FuncVariations(CalculusProblem):
             else:
                 df_values.append(sign_of_der((r+roots[i+1])/2 ))
         if not len(roots):# No roots, just get the constant sign of the derivative
-            df_values.append(sign_of_der(  0.))
-        df_values .append(latex(der.limit(self.x, oo)))
+            df_values.append(sign_of_der(0.))
+        df_values .append(latex(  self._real_lim(der, u_b) ))
 
         f_variations =[]
         max_values = []
         min_values = []
-        f_values = [expression.limit(self.x, -oo)]
+        f_values = [ self._real_lim(expression, l_b) ]
         if self.approx_f_root:
             f_values+= [expression.evalf(n=3, subs={self.x: r}) for r in roots]
         else:
             f_values += [expression.subs( self.x, r) for r in roots]
-        f_values+= [expression.limit(self.x, oo)]
+        f_values+= [self._real_lim(expression, u_b)]
         f_values_l=[latex(f) for f in f_values]
         p=0
         for df in df_values:
@@ -173,10 +192,10 @@ class FuncVariations(CalculusProblem):
         else:
             max_values.append(" ")
             min_values.append(f_values_l[p])
-        x_values=[r"-\infty"]
+        x_values=[latex(l_b)]
         for r in roots:
             x_values += [" ", latex(r)]
-        x_values += [" ", r"+\infty"]
+        x_values += [" ", latex(u_b)]
 
         variations = variation_table(x_values, df_values, max_values, f_variations, min_values)
 
