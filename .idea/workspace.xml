@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77480ddf-e54f-4b48-9048-5a659cd55a75" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_exo/base_problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/base_problems.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/generate_tex.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/generate_tex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_exo/internationalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/internationalization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_exo/problems.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/problems.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/math_exo/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_exo/utils.py" afterDir="false" />
     </list>
@@ -35,20 +39,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.base_problems.executor": "Run",
-    "Python.internationalization.executor": "Run",
-    "Python.main (1).executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.problems.executor": "Run",
-    "Python.utils.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.base_problems.executor&quot;: &quot;Run&quot;,
+    &quot;Python.internationalization.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.problems.executor&quot;: &quot;Run&quot;,
+    &quot;Python.utils.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\francois.gallard\Documents\workspace_pycharm\math_exo\math_exo\babel" />
