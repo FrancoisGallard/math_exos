@@ -16,10 +16,10 @@
 
 import shutil
 from io import StringIO
-from typing import List
 from random import choice
-import latextable
+from typing import List
 
+import latextable
 from texttable import Texttable
 
 from math_exo.base_problems import CalculusProblem
@@ -46,8 +46,7 @@ def latexify_table(lines, headers):
     return latex_quest
 
 
-
-def generate_table(problem: CalculusProblem |List[CalculusProblem], header, n_expr: int = 10, shuffle=False):
+def generate_table(problem: CalculusProblem | List[CalculusProblem], header, n_expr: int = 10, shuffle=False):
     lines_sol = []
     lines_question = []
 
@@ -87,7 +86,7 @@ def generate_latex_files(solution_tables, questions_tables, title):
 def generate_files_content(solution_tables, questions_tables, title):
     solution, questions = StringIO(), StringIO()
 
-    for is_solution, outf in zip([True, False],[solution, questions]):
+    for is_solution, outf in zip([True, False], [solution, questions]):
 
         outf.write(r"\documentclass[11pt,a4paper]{article}" + "\n")
         outf.write(r"\usepackage[margin=1cm, tmargin=1cm, textheight=20cm, vmargin=1.5cm]{geometry}" + "\n")

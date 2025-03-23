@@ -25,9 +25,8 @@ from sympy import oo
 from sympy.core.mul import Mul
 from sympy.logic.boolalg import BooleanTrue, BooleanFalse
 
-from math_exo.utils import pretty_print_eq, get_roots, variation_table
-
 from math_exo.internationalization import *
+from math_exo.utils import pretty_print_eq, get_roots, variation_table
 
 
 def sym_rand_int(max_coeff):
@@ -37,8 +36,8 @@ def sym_rand_int(max_coeff):
 class CalculusProblem():
     """Abstract calculus problem"""
     header: List[Mapping] = [equation_, solutions_]
-    exercise:Mapping[str, str] = solve_
-    expr=""
+    exercise: Mapping[str, str] = solve_
+    expr = ""
     degree = 1
     x = Symbol("x", real=True)
     y = Symbol("y", real=True)
@@ -68,20 +67,21 @@ class CalculusProblem():
 
     def pretty_print_eqs(self, equations=None):
         if equations is None:
-            equations=self.generate()
+            equations = self.generate()
         return [pretty_print_eq(exp) for exp in equations]
 
-    def _check_eq_sol(self,equation, solutions):
-        if  equation==  BooleanTrue() or  equation==  BooleanFalse():
+    def _check_eq_sol(self, equation, solutions):
+        if equation == BooleanTrue() or equation == BooleanFalse():
             raise GeneratorsNeeded()
-        if solutions== BooleanTrue() or solutions== BooleanFalse():
-            if solutions ==  BooleanTrue():
+        if solutions == BooleanTrue() or solutions == BooleanFalse():
+            if solutions == BooleanTrue():
                 solutions_str = r"$x \in {\rm I\!R}$"
             else:
                 solutions_str = r"$x \in \O$"
         else:
-            solutions_str=None
+            solutions_str = None
         return solutions_str
+
 
 class ExpandFactorFindRoots(CalculusProblem):
     """Abstract expand find roots"""
@@ -102,7 +102,7 @@ class ExpandFactorFindRoots(CalculusProblem):
             exp = expression
             fact = factor(exp)
 
-        exp= latex(exp)+" = 0"
+        exp = latex(exp) + " = 0"
         roots = get_roots(fact, self.degree)
         return exp, fact, roots
 
@@ -112,6 +112,7 @@ class DifferentiationProblem(CalculusProblem):
 
     exercise = derivation_
     header: List[str] = [function_, derivative_]
+
     @abstractmethod
     def _get_one_expr(self) -> Expr:
         return
@@ -120,11 +121,12 @@ class DifferentiationProblem(CalculusProblem):
         expression = self._get_one_expr()
         return expression, diff(expression, self.x)
 
+
 class FuncVariations(CalculusProblem):
     """Abstract functions variations"""
     degree = 1
     exercise = variations_
-    approx_f_root=False
+    approx_f_root = False
     header: List[str] = [function_, variations_]
 
     @abstractmethod
@@ -134,14 +136,14 @@ class FuncVariations(CalculusProblem):
     def _get_bounds_validity(self):
         return -oo, oo
 
-    def _get_der_sign_expr(self, expr)->Expr:
+    def _get_der_sign_expr(self, expr) -> Expr:
         return diff(expr, self.x)
 
-    def _real_lim(self, expr:Expr, val:float):
+    def _real_lim(self, expr: Expr, val: float):
         if not self.x in expr.free_symbols:
             return expr
-        lim=expr.limit(self.x, val, dir="+")
-        if isinstance(lim, Mul):#  -oo*I or +oo*I
+        lim = expr.limit(self.x, val, dir="+")
+        if isinstance(lim, Mul):  # -oo*I or +oo*I
             lim = expr.limit(self.x, val, dir="-")
         return lim
 
@@ -152,63 +154,65 @@ class FuncVariations(CalculusProblem):
         l_b, u_b = self._get_bounds_validity()
         roots_m = get_roots(der, degree=get_degree(der, gen=self.x), as_tex=False, l_b=l_b, u_b=u_b)
 
-        roots=[]
+        roots = []
         for r in roots_m:
             if r not in roots:
                 roots.append(r)
+
         def sign_of_der(x_val):
-            val= der.evalf(subs={self.x: x_val})
-            if val==0.:
+            val = der.evalf(subs={self.x: x_val})
+            if val == 0.:
                 return "0"
-            elif val>0:
+            elif val > 0:
                 return "+"
             return "-"
-        df_values=[latex( self._real_lim(der, l_b)  )]
+
+        df_values = [latex(self._real_lim(der, l_b))]
         for i, r in enumerate(roots):
-            if i==0:
+            if i == 0:
                 df_values.append(sign_of_der(roots[0] - 1.))
 
             df_values.append("0")
 
-            if i==len(roots)-1:
+            if i == len(roots) - 1:
                 df_values.append(sign_of_der(roots[-1] + 1.))
             else:
-                df_values.append(sign_of_der((r+roots[i+1])/2 ))
-        if not len(roots):# No roots, just get the constant sign of the derivative
+                df_values.append(sign_of_der((r + roots[i + 1]) / 2))
+        if not len(roots):  # No roots, just get the constant sign of the derivative
             df_values.append(sign_of_der(0.))
-        df_values .append(latex(  self._real_lim(der, u_b) ))
+        df_values.append(latex(self._real_lim(der, u_b)))
 
-        f_variations =[]
+        f_variations = []
         max_values = []
         min_values = []
-        f_values = [ self._real_lim(expression, l_b) ]
+        f_values = [self._real_lim(expression, l_b)]
         if self.approx_f_root:
-            f_values+= [expression.evalf(n=3, subs={self.x: r}) for r in roots]
+            f_values += [expression.evalf(n=3, subs={self.x: r}) for r in roots]
         else:
-            f_values += [expression.subs( self.x, r) for r in roots]
-        f_values+= [self._real_lim(expression, u_b)]
-        f_values_l=[latex(f) for f in f_values]
-        p=0
+            f_values += [expression.subs(self.x, r) for r in roots]
+        f_values += [self._real_lim(expression, u_b)]
+        f_values_l = [latex(f) for f in f_values]
+        p = 0
         for df in df_values:
-            if df=="+":
+            if df == "+":
                 f_variations.append(r"\nearrow")
-                min_values+=[f_values_l[p], " "]
+                min_values += [f_values_l[p], " "]
                 max_values += [" ", " "]
-                p+=1
-            elif df=="-":
+                p += 1
+            elif df == "-":
                 f_variations.append(r"\searrow")
                 max_values += [f_values_l[p], " "]
                 min_values += [" ", " "]
                 p += 1
             else:
                 f_variations.append(" ")
-        if df_values[-2]=="+":
+        if df_values[-2] == "+":
             min_values.append(" ")
             max_values.append(f_values_l[p])
         else:
             max_values.append(" ")
             min_values.append(f_values_l[p])
-        x_values=[latex(l_b)]
+        x_values = [latex(l_b)]
         for r in roots:
             x_values += [" ", latex(r)]
         x_values += [" ", latex(u_b)]
@@ -219,6 +223,5 @@ class FuncVariations(CalculusProblem):
 
     def pretty_print_eqs(self, equations=None):
         if equations is None:
-            equations=self.generate()
+            equations = self.generate()
         return [pretty_print_eq(equations[0]), equations[1]]
-
