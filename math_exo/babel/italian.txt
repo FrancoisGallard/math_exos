@@ -27,3 +27,9 @@ Disequazioni
 Equazione equivalente
 Disequazione equivalente
 Filtra per tipo di esercizio
+Limitare
+Intervallo
+Limitazione
+Insieme di definizione
+Trovare il polinomio
+Dati

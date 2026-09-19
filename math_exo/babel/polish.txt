@@ -27,3 +27,9 @@ Inequações
 Equação equivalente
 Inequação equivalente
 Filtrar por tipo de exercício
+Enquadrar
+Intervalo
+Enquadramento
+Domínio de definição
+Encontrar o polinómio
+Dados

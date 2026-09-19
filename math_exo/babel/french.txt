@@ -27,3 +27,9 @@ Inéquations
 Équation équivalente
 Inéquation équivalente
 Filtrer par type d'exercice
+Encadrer
+Intervalle
+Encadrement
+Ensemble de définition
+Trouver le polynôme
+Données

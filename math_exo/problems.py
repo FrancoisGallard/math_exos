@@ -16,12 +16,16 @@
 
 import inspect
 import sys
+from random import choice
 from random import randint
 from random import randrange
 from typing import List, Tuple
 
 from sympy import Expr, expand, Integer, latex
 from sympy import factor, sqrt, solve, exp, oo
+from sympy import Interval, S
+from sympy.calculus.singularities import is_monotonic
+from sympy.calculus.util import continuous_domain
 from sympy.polys.specialpolys import random_poly
 from sympy.solvers.inequalities import reduce_rational_inequalities
 
@@ -509,6 +513,133 @@ class VarFirstOrderPolyRatioSqrt(FuncVariations):
         self.num = self.a * self.x + self.b
         self.den = self.c * self.x + self.d
         return self.num / sqrt(self.den)
+
+
+class FrameMonotonicFunc(CalculusProblem):
+    expr = "encadrer f(x) sur [p ; q]"
+    exercise = frame_
+    header = [function_, interval_, framing_]
+    # The bounds carry the values of f, they need more room than the default 3cm
+    col_widths = ["p{5cm}", "p{2.5cm}", "p{9.5cm}"]
+
+    def _get_one_expr(self) -> Expr:
+        """Draw one function among sqrt, affine, inverse, second degree and the
+        compositions of two of them.
+
+        Returns:
+            The drawn expression.
+        """
+        x = self.x
+        a = randrange(1, self.max_coeff) * choice([-1, 1])
+        b, c = [sym_rand_int(self.max_coeff) for _ in range(2)]
+        kind = randint(0, 5)
+        if kind == 0:
+            return a * x + b
+        if kind == 1:
+            return a * x ** 2 + b * x + c
+        if kind == 2:
+            return 1 / (a * x + b)
+        if kind == 3:
+            return 1 / (a * x ** 2 + b * x + c)
+        # A radicand with no constant term is a monomial that sympy pulls apart,
+        # printing sqrt(-7.x) as sqrt(7).sqrt(-x)
+        while b == 0:
+            b = sym_rand_int(self.max_coeff)
+        if kind == 4:
+            return sqrt(a * x + b)
+        while c == 0:
+            c = sym_rand_int(self.max_coeff)
+        return sqrt(a * x ** 2 + b * x + c)
+
+    def _generate(self) -> Tuple[str, str, str]:
+        x = self.x
+        while True:
+            expression = self._get_one_expr()
+            lower = randint(-self.max_coeff // 2, self.max_coeff // 2)
+            interval = Interval(lower, lower + randint(1, 6))
+            try:
+                # f must be defined and continuous over the whole interval, and
+                # monotonic there, otherwise its bounds are not its end values
+                if continuous_domain(expression, x, interval) != interval:
+                    continue
+                if not is_monotonic(expression, interval, x):
+                    continue
+            except Exception:
+                continue
+            break
+
+        low, high = [expression.subs(x, bound) for bound in interval.args[:2]]
+        if low.evalf() > high.evalf():  # f is decreasing over the interval
+            low, high = high, low
+
+        function = "f(x) = " + latex(expression)
+        bounds = fr"{latex(low)} \leq f(x) \leq {latex(high)}"
+        # A semicolon, not the comma latex(interval) prints: in French a comma
+        # inside a pair of numbers reads as a decimal separator
+        bounds_tex = (fr"\left[{latex(interval.start)} \,;\, "
+                      fr"{latex(interval.end)}\right]")
+        return function, bounds_tex, bounds
+
+
+class DefinitionDomain(CalculusProblem):
+    expr = "sqrt(a.x+b), 1/sqrt(a.x+b), 1/(a.x**2+b.x+c)"
+    exercise = domain_
+    header = [function_, domain_]
+
+    def _get_one_expr(self) -> Expr:
+        """Draw one of the three function shapes whose domain is not all of R.
+
+        Returns:
+            The drawn expression.
+        """
+        x = self.x
+        a = randrange(1, self.max_coeff) * choice([-1, 1])
+        b = sym_rand_int(self.max_coeff)
+        kind = randint(0, 2)
+        # A radicand with no constant term is a monomial that sympy pulls apart,
+        # printing 1/sqrt(-7.x) as sqrt(7)/(7.sqrt(-x))
+        while kind in (0, 1) and b == 0:
+            b = sym_rand_int(self.max_coeff)
+        if kind == 0:
+            return sqrt(a * x + b)
+        if kind == 1:
+            return 1 / sqrt(a * x + b)
+        # Built from its roots so that the excluded values are whole numbers
+        root = sym_rand_int(self.max_coeff)
+        other_root = sym_rand_int(self.max_coeff)
+        while other_root == root:
+            other_root = sym_rand_int(self.max_coeff)
+        return 1 / expand(a * (x - root) * (x - other_root))
+
+    def _generate(self) -> Tuple[str, str]:
+        expression = self._get_one_expr()
+        domain = continuous_domain(expression, self.x, S.Reals)
+        return "f(x) = " + latex(expression), latex(domain)
+
+
+class PolyFromRootsAndValue(CalculusProblem):
+    expr = "f(x1)=0, f(x2)=0, f(x0)=y0 -> a.x**2+b.x+c"
+    exercise = find_poly_
+    header = [data_, polynomial_]
+
+    def _generate(self) -> Tuple[str, str]:
+        x = self.x
+        root = randint(-5, 5)
+        other_root = randint(-5, 5)
+        while other_root == root:
+            other_root = randint(-5, 5)
+        # A third abscissa, away from the roots where f is worth nothing else
+        abscissa = randint(-5, 5)
+        while abscissa in (root, other_root):
+            abscissa = randint(-5, 5)
+        # Drawing the leading coefficient keeps the given value a whole number
+        lead = randrange(1, 5) * choice([-1, 1])
+
+        value = lead * (abscissa - root) * (abscissa - other_root)
+        data = (fr"x_1 = {root}, \quad x_2 = {other_root},"
+                fr" \quad f({abscissa}) = {value}")
+        polynomial = "f(x) = " + latex(expand(lead * (x - root) * (x - other_root)))
+        return data, polynomial
 
 
 predicate = lambda x: inspect.isclass(x) and issubclass(x, CalculusProblem)

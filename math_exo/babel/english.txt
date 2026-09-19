@@ -27,3 +27,9 @@ Inequalities
 Equivalent equation
 Equivalent inequality
 Filter by exercise type
+Bound
+Interval
+Bounds
+Domain of definition
+Find the polynomial
+Data
