@@ -38,11 +38,11 @@ def all_equal(iterable):
     return next(g, True) and not next(g, False)
 
 
-@st.cache_resource
+@st.cache_data
 def list_pbs(language):
     docs = [_(pb.exercise) + " " + _(pb.expr) for pb in ALL_PROBLEMS]
     pb_str = sorted(docs)
-    pb_sort = [x for _, x in sorted(zip(docs, ALL_PROBLEMS))]
+    pb_sort = [pb for _, pb in sorted(zip(docs, ALL_PROBLEMS), key=lambda item: item[0])]
     return docs, pb_str, pb_sort
 
 
@@ -53,7 +53,7 @@ def get_pb_classes(problems_select):
     return [ALL_PROBLEMS_SORTED[ALL_PROBLEMS_STR.index(pb)] for pb in problems_select]
 
 
-@st.cache_resource
+@st.cache_data
 def generate(problems_select, n_expr, shuffle=False):
     classes = get_pb_classes(problems_select)
     problems = [pb() for pb in classes]

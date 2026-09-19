@@ -37,7 +37,7 @@ def get_roots(expr, degree, as_tex=True, l_b=-oo, u_b=oo):
             root = rootof(expr, i)
             if root.is_real and root > l_b and root < u_b:
                 roots.append(root)
-        except:
+        except Exception:
             pass
     if as_tex:
         return str(roots).replace("[", r"\{").replace("]", r"\}")

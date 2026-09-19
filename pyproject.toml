@@ -5,11 +5,14 @@ description = "Generate math problems and solution in Latex"
 readme = "README.md"
 authors = [{name = "Francois Gallard, Flore Crevel"}]
 license = {text = "AGPL"}
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 4 - Beta"
 ]
 dependencies = [
-    "latextable","sympy", "streamlit"
+    "latextable>=1.0.1",
+    "sympy>=1.14",
+    "streamlit>=1.64",
 ]
 
 [project.urls]
@@ -17,5 +20,8 @@ Homepage = "https://github.com/FrancoisGallard/math_exos"
 Changelog = "https://github.com/FrancoisGallard/math_exos/releases"
 Issues = "https://github.com/FrancoisGallard/math_exos/issues"
 
+[tool.setuptools.packages.find]
+include = ["math_exo*"]
+
 [tool.setuptools.package-data]
-mypkg = ["*.txt", "*.rst"]
+"math_exo.babel" = ["*.txt"]
