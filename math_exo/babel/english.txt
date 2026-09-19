@@ -23,3 +23,4 @@ Number of equations per table
 Generate LateX code and compile
 Open Overleaf to compile
 Variations
+Inequalities

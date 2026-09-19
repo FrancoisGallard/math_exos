@@ -23,3 +23,4 @@ Anzahl der Gleichungen pro Tabelle
 LateX-Code generieren und kompilieren
 Overleaf zum Kompilieren öffnen
 Variations
+Ungleichungen

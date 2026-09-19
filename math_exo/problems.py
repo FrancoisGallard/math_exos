@@ -318,6 +318,7 @@ class LinearSystem2eqs(CalculusProblem):
 class Inequalities2Lin(CalculusProblem):
     expr = "a.x + b <= c.x + d"
     exercise = solve_
+    header = [inequation_, solutions_]
 
     def _generate(self) -> Tuple[str, str]:
         coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(4)]
@@ -337,6 +338,7 @@ class Inequalities2Lin(CalculusProblem):
 class InequalitiesProd2Lin(CalculusProblem):
     expr = "(a.x + b)(c.x + d) <= | >= 0"
     exercise = solve_
+    header = [inequation_, solutions_]
 
     def _generate(self) -> Tuple[str, str]:
         coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(4)]
@@ -364,6 +366,7 @@ class InequalitiesProd2Lin(CalculusProblem):
 class InequalitiesProd2LinK(CalculusProblem):
     expr = "(a.x + b)(c.x + d) <= | >= k"
     exercise = solve_
+    header = [inequation_, solutions_]
 
     def _generate(self) -> Tuple[str, str]:
         coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(5)]
@@ -391,6 +394,7 @@ class InequalitiesProd2LinK(CalculusProblem):
 class InequalitiesDivLinK(CalculusProblem):
     expr = "(a.x + b)/(c.x + d) <= | >= k"
     exercise = solve_
+    header = [inequation_, solutions_]
 
     def _generate(self) -> Tuple[str, str]:
         coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(5)]
