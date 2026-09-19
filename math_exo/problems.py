@@ -143,9 +143,9 @@ class RationalFuncEq(ExpandFactorFindRoots):
             k = Integer(sym_rand_int(self.max_coeff))
         left = a * x + b
         right = c * x + d
-        exp_sol = pretty_print_eq(left / right) + " = " + str(k)
+        exp_sol = pretty_print_eq(latex(left / right) + " = " + latex(k))
         # Both sides over the denominator of the left one: (left - k.right)/right = 0
-        equivalent = pretty_print_eq(expand(left - k * right) / right) + " = 0"
+        equivalent = pretty_print_eq(latex(expand(left - k * right) / right) + " = 0")
         forbidden = -d / c
         root = (k * d - b) / (a - k * c)
         return exp_sol, equivalent, forbidden, root

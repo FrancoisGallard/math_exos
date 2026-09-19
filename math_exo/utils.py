@@ -14,7 +14,49 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 from sympy import latex, Expr, rootof, oo
+
+MATH_SEGMENT = re.compile(r"\$(.+?)\$", re.DOTALL)
+RELATION = re.compile(r"(\\leq|\\geq|\\neq|=|<|>)")
+
+
+def enlarge_fractions(pretty: str) -> str:
+    r"""Enlarge the operands holding a fraction, leave the relations at their size.
+
+    A whole relation set in LARGE blows up its comparison sign and its right
+    hand side along with the fraction, so each operand is sized on its own:
+    ``\begin{LARGE}$\frac{a}{b}$\end{LARGE} $\geq -9$``.
+
+    Args:
+        pretty: A latex string, with its math mode delimiters.
+
+    Returns:
+        The same string with the fractions, and only them, enlarged.
+    """
+
+    def _segment(match):
+        content = match.group(1)
+        # \systeme and the variation tables hold relations of their own
+        if r"\frac{" not in content or r"\systeme" in content or r"\begin{" in content:
+            return match.group(0)
+
+        pieces = []
+        for i, part in enumerate(RELATION.split(content)):  # operand, relation, ...
+            if not part.strip():
+                continue
+            if i % 2:
+                # A relation, left at the surrounding size. The empty groups give
+                # it back the spacing it would get inside a whole expression.
+                pieces.append("${}" + part + "{}$")
+            elif r"\frac{" in part:
+                pieces.append(r"\begin{LARGE}$" + part + r"$\end{LARGE}")
+            else:
+                pieces.append("$" + part + "$")
+        return "".join(pieces)
+
+    return MATH_SEGMENT.sub(_segment, pretty)
 
 
 def pretty_print_eq(eq: Expr | str):
@@ -26,7 +68,7 @@ def pretty_print_eq(eq: Expr | str):
     if "$" not in pretty:
         pretty = "$" + pretty + "$"
     if r"\frac{" in pretty and r"\begin{LARGE}" not in pretty:
-        pretty = r"\begin{LARGE}" + pretty + r"\end{LARGE}"
+        pretty = enlarge_fractions(pretty)
     return pretty
 
 
