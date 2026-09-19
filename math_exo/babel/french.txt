@@ -26,3 +26,4 @@ Variations
 Inéquations
 Équation équivalente
 Inéquation équivalente
+Filtrer par type d'exercice

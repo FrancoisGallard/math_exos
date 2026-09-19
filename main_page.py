@@ -47,6 +47,8 @@ def list_pbs(language):
 
 
 ALL_PB_DOCS, ALL_PROBLEMS_STR, ALL_PROBLEMS_SORTED = list_pbs(language)
+ALL_PROBLEMS_TYPES = [_(pb.exercise) for pb in ALL_PROBLEMS_SORTED]
+ALL_TYPES = sorted(set(ALL_PROBLEMS_TYPES))
 
 
 def get_pb_classes(problems_select):
@@ -86,7 +88,14 @@ st.title(_(math_exercises_))
 
 st.subheader(_(select_exercises_))
 
-pb_selects = tuple(st.multiselect(_(exercises_list_), ALL_PROBLEMS_STR))
+types_select = st.pills(_(filter_by_type_), ALL_TYPES, selection_mode="multi")
+if types_select:
+    shown_problems = [pb for pb, pb_type in zip(ALL_PROBLEMS_STR, ALL_PROBLEMS_TYPES)
+                      if pb_type in types_select]
+else:  # No type picked, the filter is off and every exercise stays available
+    shown_problems = ALL_PROBLEMS_STR
+
+pb_selects = tuple(st.multiselect(_(exercises_list_), shown_problems))
 nb_eqs = st.slider(label=_(num_eqs_per_table_), min_value=1, max_value=20, value=10, step=1)
 
 shuffle = st.checkbox(_(shuffle_problems_))

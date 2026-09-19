@@ -26,3 +26,4 @@ Variations
 Disequazioni
 Equazione equivalente
 Disequazione equivalente
+Filtra per tipo di esercizio

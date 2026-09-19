@@ -26,3 +26,4 @@ Variations
 Ungleichungen
 Äquivalente Gleichung
 Äquivalente Ungleichung
+Nach Aufgabentyp filtern

@@ -26,3 +26,4 @@ Variations
 Inequalities
 Equivalent equation
 Equivalent inequality
+Filter by exercise type
