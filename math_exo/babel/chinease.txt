@@ -24,3 +24,5 @@
 打开 Overleaf 进行编译
 Variations
 不等式
+等价方程
+等价不等式

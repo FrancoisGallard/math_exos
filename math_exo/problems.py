@@ -127,18 +127,28 @@ class RationalFuncEq(ExpandFactorFindRoots):
     expr = "(a.x+b)/(c.x+d)=k"
     exercise = factor_solve_
     degree = 1
-    header = [equation_, forbidden_values_, solutions_]
+    header = [equation_, equivalent_equation_, forbidden_values_, solutions_]
 
-    def _generate(self) -> Tuple[Expr, Expr, Expr]:
+    def _generate(self) -> Tuple[Expr, Expr, Expr, Expr]:
         x = self.x
         c = Integer(randrange(1, self.max_coeff))
         a, b, d, k = [Integer(sym_rand_int(self.max_coeff)) for _ in range(4)]
+        while a * d - b * c == 0:
+            # (a.x+b) is proportional to (c.x+d): the quotient is the constant a/c,
+            # the equation has no solution and its only root is the forbidden value
+            b = Integer(sym_rand_int(self.max_coeff))
+        # k == 0 leaves nothing to move, the equivalent form would be the statement;
+        # a == k.c makes the numerator below constant, so there is no root
+        while k == 0 or a - k * c == 0:
+            k = Integer(sym_rand_int(self.max_coeff))
         left = a * x + b
         right = c * x + d
         exp_sol = pretty_print_eq(left / right) + " = " + str(k)
+        # Both sides over the denominator of the left one: (left - k.right)/right = 0
+        equivalent = pretty_print_eq(expand(left - k * right) / right) + " = 0"
         forbidden = -d / c
         root = (k * d - b) / (a - k * c)
-        return exp_sol, forbidden, root
+        return exp_sol, equivalent, forbidden, root
 
 
 class ProdTwoLins(ExpandFactorFindRoots):
@@ -394,12 +404,18 @@ class InequalitiesProd2LinK(CalculusProblem):
 class InequalitiesDivLinK(CalculusProblem):
     expr = "(a.x + b)/(c.x + d) <= | >= k"
     exercise = solve_
-    header = [inequation_, solutions_]
+    header = [inequation_, equivalent_inequation_, solutions_]
+    # Inequality solutions are two-part, they need more room than the default 3cm
+    col_widths = ["p{5cm}", "p{5cm}", "p{7cm}"]
 
-    def _generate(self) -> Tuple[str, str]:
+    def _generate(self) -> Tuple[str, str, str]:
         coeffs = [Integer(randint(self.min_coeff, self.max_coeff)) for _ in range(5)]
-        if coeffs[0] == coeffs[2] == 0:
+        if coeffs[0] == 0:
             coeffs[0] += 1
+        while coeffs[2] == 0:  # A constant denominator is not a quotient anymore
+            coeffs[2] = Integer(randint(self.min_coeff, self.max_coeff))
+        while coeffs[4] == 0:  # Nothing to move, the equivalent form is the statement
+            coeffs[4] = Integer(randint(self.min_coeff, self.max_coeff))
 
         left = coeffs[0] * self.x + coeffs[1]
         right = coeffs[2] * self.x + coeffs[3]
@@ -416,7 +432,15 @@ class InequalitiesDivLinK(CalculusProblem):
             solutions_str = solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
         equation_str = "$ " + latex(equation) + r" $"
 
-        return equation_str, solutions_str
+        # Both sides over the same denominator: (left - k.right)/right <= | >= 0
+        numerator = expand(left - coeffs[4] * right)
+        if sign:
+            equivalent = numerator / right <= 0
+        else:
+            equivalent = numerator / right >= 0
+        equivalent_str = "$ " + latex(equivalent) + r" $"
+
+        return equation_str, equivalent_str, solutions_str
 
 
 class VarSecOrderPolyDeg2(FuncVariations):

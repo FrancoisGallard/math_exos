@@ -24,3 +24,5 @@ Générer le code LateX et compiler
 Ouvrir Overleaf pour compiler
 Variations
 Inéquations
+Équation équivalente
+Inéquation équivalente

@@ -25,15 +25,19 @@ from texttable import Texttable
 from math_exo.base_problems import CalculusProblem
 
 
-def latexify_table(lines, headers):
+def latexify_table(lines, headers, col_widths=None):
     table_quest = Texttable()
 
-    if len(headers) == 1:
+    if col_widths:
+        align = list(col_widths)
+    elif len(headers) == 1:
         align = ["p{17cm}"]
     elif len(headers) == 2:
         align = ["p{6.5cm}", "p{10.5cm}"]
     elif len(headers) == 3:
         align = ["p{6cm}", "p{8cm}", "p{3cm}"]
+    elif len(headers) == 4:
+        align = ["p{4cm}", "p{5cm}", "p{3cm}", "p{5cm}"]
     else:
         raise ValueError("Table of size " + str(len(headers)) + " not supported.")
     table_quest.set_cols_align(align)
@@ -63,8 +67,10 @@ def generate_table(problem: CalculusProblem | List[CalculusProblem], header, n_e
         for i in range(n_expr):
             _add_pb(problem)
 
-    latex_sol = latexify_table(lines_sol, header)
-    latex_quest = latexify_table(lines_question, header)
+    first = problem[0] if shuffle else problem
+    col_widths = first.col_widths
+    latex_sol = latexify_table(lines_sol, header, col_widths)
+    latex_quest = latexify_table(lines_question, header, col_widths)
     return latex_sol, latex_quest
 
 

@@ -24,3 +24,5 @@ Generare il codice LateX e compilare
 Aprire Overleaf per compilare
 Variations
 Disequazioni
+Equazione equivalente
+Disequazione equivalente

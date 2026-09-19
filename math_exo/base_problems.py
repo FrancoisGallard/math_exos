@@ -36,6 +36,8 @@ def sym_rand_int(max_coeff):
 class CalculusProblem():
     """Abstract calculus problem"""
     header: List[Mapping] = [equation_, solutions_]
+    col_widths: List[str] = []
+    """Table column widths, empty to let latexify_table pick them from the header"""
     exercise: Mapping[str, str] = solve_
     expr = ""
     degree = 1

@@ -24,3 +24,5 @@ LateX-Code generieren und kompilieren
 Overleaf zum Kompilieren öffnen
 Variations
 Ungleichungen
+Äquivalente Gleichung
+Äquivalente Ungleichung

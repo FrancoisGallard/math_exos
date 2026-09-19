@@ -24,3 +24,5 @@ Generate LateX code and compile
 Open Overleaf to compile
 Variations
 Inequalities
+Equivalent equation
+Equivalent inequality
