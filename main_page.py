@@ -21,8 +21,11 @@ import streamlit as st
 from math_exo.generate_tex import generate_files_content, generate_table
 from math_exo.internationalization import *
 from math_exo.problems import ALL_PROBLEMS
+from math_exo.theme import apply_theme, render_frieze
 
 st.set_page_config(page_title="Exercices de mathématiques")
+
+apply_theme()
 
 language = st.selectbox("Language", ALL_LANGUAGES, ALL_LANGUAGES.index("french"))
 
@@ -85,6 +88,7 @@ def generate(problems_select, n_expr, shuffle=False):
 
 
 st.title(_(math_exercises_))
+render_frieze()
 
 st.subheader(_(select_exercises_))
 

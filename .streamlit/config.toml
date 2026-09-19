@@ -1,0 +1,18 @@
+# "Cahier" theme: the palette of a French ruled notebook, fountain pen ink on
+# warm paper, with the teacher's red for the margin rule and the accents.
+# The layout that goes with it lives in math_exo/theme.py.
+
+[theme]
+base = "light"
+primaryColor = "#1d4e89"
+backgroundColor = "#fbf8f0"
+secondaryBackgroundColor = "#f2ecdd"
+textColor = "#1f2739"
+linkColor = "#1d4e89"
+borderColor = "#d9cfb8"
+font = "sans-serif"
+headingFont = "serif"
+codeFont = "monospace"
+baseRadius = "small"
+showWidgetBorder = true
+linkUnderline = false

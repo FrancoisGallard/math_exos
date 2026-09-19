@@ -516,7 +516,7 @@ class VarFirstOrderPolyRatioSqrt(FuncVariations):
 
 
 class FrameMonotonicFunc(CalculusProblem):
-    expr = "encadrer f(x) sur [p ; q]"
+    expr = "f(x) sur [p ; q]"
     exercise = frame_
     header = [function_, interval_, framing_]
     # The bounds carry the values of f, they need more room than the default 3cm
