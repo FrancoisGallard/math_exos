@@ -195,6 +195,29 @@ class DiffPolyExp(DifferentiationProblem):
         return random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff) ** n
 
 
+class DiffPolySquare(DifferentiationProblem):
+    expr = "(a.x + b)**2"
+
+    def _get_one_expr(self) -> Expr:
+        lin = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        while lin.subs(self.x, 0) == 0:  # b == 0, (a.x)**2 is a plain monomial
+            lin = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        return lin ** 2
+
+
+class DiffPolyFracLin(DifferentiationProblem):
+    expr = "(a.x + b)/(c.x + d)"
+
+    def _get_one_expr(self) -> Expr:
+        den = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        while (num / den).diff(self.x) == 0:
+            # Numerator proportional to the denominator: the quotient is a
+            # constant and the derivative is flatly zero
+            num = random_poly(self.x, 1, inf=self.min_coeff, sup=self.max_coeff)
+        return num / den
+
+
 class DiffPolyFracDeg1(DifferentiationProblem):
     expr = "(a.x**3 + b.x**2 + c.x + d )(e.x + f )"
 
