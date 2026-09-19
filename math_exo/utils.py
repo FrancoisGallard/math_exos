@@ -16,7 +16,33 @@
 
 import re
 
-from sympy import latex, Expr, rootof, oo
+from sympy import Expr, factor, fraction, latex, oo, rootof, together
+
+
+def to_single_fraction(expr: Expr) -> Expr:
+    """Rewrite a sum of rational fractions as a single fraction.
+
+    Differentiating a quotient leaves sympy with the derivative spread over
+    several fractions, one per term of the rule. Putting them back over a
+    common denominator gives the form the exercise expects. The numerator is
+    factored, the denominator comes out of ``together`` already factored.
+
+    Args:
+        expr: The expression to rewrite.
+
+    Returns:
+        The expression as a single fraction, unchanged if it has no denominator.
+    """
+    numerator, denominator = fraction(together(expr))
+    if denominator == 1:  # Not a quotient, leave the expression alone
+        return expr
+    if not expr.is_Add and fraction(together(fraction(expr)[0]))[1] == 1:
+        # Already a single fraction whose numerator carries no fraction of its
+        # own. together would only pull the numeric part out of its radicals,
+        # turning 5 / (-10x-10)**(3/2) into sqrt(10) / (20 (-x-1)**(3/2)).
+        return expr
+    return factor(numerator) / denominator
+
 
 MATH_SEGMENT = re.compile(r"\$(.+?)\$", re.DOTALL)
 RELATION = re.compile(r"(\\leq|\\geq|\\neq|=|<|>)")

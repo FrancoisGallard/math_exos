@@ -26,7 +26,7 @@ from sympy.core.mul import Mul
 from sympy.logic.boolalg import BooleanTrue, BooleanFalse
 
 from math_exo.internationalization import *
-from math_exo.utils import pretty_print_eq, get_roots, variation_table
+from math_exo.utils import pretty_print_eq, get_roots, to_single_fraction, variation_table
 
 
 def sym_rand_int(max_coeff):
@@ -119,9 +119,9 @@ class DifferentiationProblem(CalculusProblem):
     def _get_one_expr(self) -> Expr:
         return
 
-    def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
+    def _generate(self) -> Tuple[Expr, Expr]:
         expression = self._get_one_expr()
-        return expression, diff(expression, self.x)
+        return expression, to_single_fraction(diff(expression, self.x))
 
 
 class FuncVariations(CalculusProblem):
