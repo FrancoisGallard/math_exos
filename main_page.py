@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from html import escape
 from itertools import groupby
 
 import streamlit as st
@@ -24,6 +25,10 @@ from math_exo.problems import ALL_PROBLEMS
 from math_exo.theme import apply_theme, render_frieze
 
 st.set_page_config(page_title="Exercices de mathématiques")
+
+# The names Overleaf gives the two files of the project it creates
+PROBLEM_FILE = "problem.tex"
+SOLUTION_FILE = "solution.tex"
 
 apply_theme()
 
@@ -107,17 +112,21 @@ if pb_selects:
     solution, questions = generate(pb_selects, nb_eqs, shuffle)
     if solution is not None:
         st.subheader(_(generate_code_))
-        body = fr"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
-        <div align="center">
-    <input type="submit" value="{_(open_overleaf_)}">
+        # snip[] carries the two documents and snip_name[] their names, paired
+        # in the order the fields appear. Without the names Overleaf calls them
+        # Untitled.tex and Untitled (1).tex. main_document opens the exercise
+        # sheet rather than its solution.
+        # The sources hold & and <, which have to be escaped to survive the
+        # textarea; the browser hands the original text back on submit.
+        body = f"""<form action="https://www.overleaf.com/docs" method="post" target="_blank">
+    <div align="center">
+        <input type="submit" value="{escape(_(open_overleaf_))}">
     </div>
-    <textarea rows="8" cols="120" name="snip">
-    {questions}
-    </textarea>
-    <textarea rows="8" cols="120" name="snip">
-    {solution}
-    </textarea>
-    
-    </form>
-    """
+    <input type="hidden" name="snip_name[]" value="{PROBLEM_FILE}">
+    <input type="hidden" name="snip_name[]" value="{SOLUTION_FILE}">
+    <input type="hidden" name="main_document" value="{PROBLEM_FILE}">
+    <textarea rows="8" cols="120" name="snip[]">{escape(questions)}</textarea>
+    <textarea rows="8" cols="120" name="snip[]">{escape(solution)}</textarea>
+</form>
+"""
         st.html(body)
