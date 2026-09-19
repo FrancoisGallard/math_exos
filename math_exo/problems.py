@@ -75,6 +75,35 @@ class FactorPolySum(ExpandFactorFindRoots):
         return a_expr * (c * x + d) + e * (f * x + g) * a_expr
 
 
+class FactorProdDiffSquares(ExpandFactorFindRoots):
+    expr = "(a-b.x)(c.x-d)+a²-b².x²=0"
+    exercise = factor_solve_
+    degree = 2
+    expand_expr = False
+
+    def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
+        x = self.x
+        a, b = [randrange(1, self.max_coeff) for _ in range(2)]
+        c, d = [sym_rand_int(self.max_coeff) for _ in range(2)]
+        while d == 0:  # Keeps the second factor of the (c.x-d) shape
+            d = sym_rand_int(self.max_coeff)
+        # c == 0 degenerates the second factor into a constant,
+        # b + c == 0 cancels the x**2 terms and makes the equation linear
+        while c == 0 or b + c == 0:
+            c = sym_rand_int(self.max_coeff)
+
+        # Written term by term: sympy would reorder the sum and scatter
+        # a**2 - (b.x)**2, which is the a²-b² identity to be recognized.
+        exp = (rf"\left({latex(a - b * x)}\right) \left({latex(c * x - d)}\right)"
+               rf" + {latex(a ** 2)} - {latex((b * x) ** 2)} = 0")
+        exp_sol = (a - b * x) * (c * x - d) + a ** 2 - (b * x) ** 2
+        # (a-b.x)(c.x-d) + (a-b.x)(a+b.x), the common factor made explicit
+        # rather than the sign-normalized form returned by factor()
+        fact = (a - b * x) * ((b + c) * x + a - d)
+        roots = get_roots(exp_sol, self.degree)
+        return exp, fact, roots
+
+
 class FactorEqsTwoLin(ExpandFactorFindRoots):
     expr = "a.x+b = c.x+d"
     exercise = factor_solve_
