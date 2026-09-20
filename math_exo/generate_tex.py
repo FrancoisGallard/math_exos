@@ -69,7 +69,14 @@ def generate_table(problem: CalculusProblem | List[CalculusProblem], header, n_e
 
     first = problem[0] if shuffle else problem
     col_widths = first.col_widths
-    latex_sol = latexify_table(lines_sol, header, col_widths)
+
+    # The questions hold one line each and fit; only the answers can be tall
+    # enough to need several tables.
+    rows_per_table = first.max_solution_rows or len(lines_sol)
+    latex_sol = "\n".join(
+        latexify_table(lines_sol[start:start + rows_per_table], header, col_widths)
+        for start in range(0, len(lines_sol), rows_per_table)
+    )
     latex_quest = latexify_table(lines_question, header, col_widths)
     return latex_sol, latex_quest
 

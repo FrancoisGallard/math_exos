@@ -42,6 +42,8 @@ class CalculusProblem():
     header: List[Mapping] = [equation_, solutions_]
     col_widths: List[str] = []
     """Table column widths, empty to let latexify_table pick them from the header"""
+    max_solution_rows: int = 0
+    """Rows per table in the solution, 0 to keep the whole set in one table"""
     exercise: Mapping[str, str] = solve_
     expr = ""
     degree = 1
@@ -157,6 +159,10 @@ class DifferentiationProblem(CalculusProblem):
 
 class FuncVariations(CalculusProblem):
     """Abstract functions variations"""
+    # Each answer is a whole array, so a tabular of ten no longer fits on a
+    # page. A tabular cannot be broken across pages either: latex would push
+    # the whole of it to the next one and let the last rows run off it.
+    max_solution_rows = 5
     degree = 1
     exercise = variations_
     approx_f_root = False
