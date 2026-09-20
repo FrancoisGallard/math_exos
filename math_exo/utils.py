@@ -103,7 +103,9 @@ def get_roots(expr, degree, as_tex=True, l_b=-oo, u_b=oo):
     for i in range(degree):
         try:
             root = rootof(expr, i)
-            if root.is_real and root > l_b and root < u_b:
+            # rootof walks the roots with their multiplicity, so a double root
+            # comes back twice and would be printed twice in the solution set
+            if root.is_real and root > l_b and root < u_b and root not in roots:
                 roots.append(root)
         except Exception:
             pass

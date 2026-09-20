@@ -33,6 +33,10 @@ def sym_rand_int(max_coeff):
     return randrange(-max_coeff, max_coeff)
 
 
+MAX_DRAWS = 200
+"""How many times a problem redraws its coefficients before giving up"""
+
+
 class CalculusProblem():
     """Abstract calculus problem"""
     header: List[Mapping] = [equation_, solutions_]
@@ -44,9 +48,35 @@ class CalculusProblem():
     x = Symbol("x", real=True)
     y = Symbol("y", real=True)
 
-    def __init__(self, min_coeff: int = -12, max_coeff: int = 12):
+    def __init__(self, min_coeff: int = -12, max_coeff: int = 12,
+                 language: str = "french"):
+        # Several problems draw a leading coefficient from randrange(1, max_coeff)
+        # and redraw until their constraints hold. Below 2 that range is empty,
+        # and a range barely wider makes constraints such as "this coefficient
+        # must be neither 0 nor the opposite of that one" impossible to satisfy,
+        # which would spin for ever. Say so here rather than there.
+        if max_coeff < 2 or min_coeff >= max_coeff:
+            raise ValueError(
+                "coefficients need room: max_coeff must be 2 or more and above "
+                f"min_coeff, got min_coeff={min_coeff}, max_coeff={max_coeff}"
+            )
         self.min_coeff: int = min_coeff
         self.max_coeff: int = max_coeff
+        self.language: str = language
+
+    def _translate(self, to_translate: Mapping[str, str]) -> str:
+        """Pick the wording of the language this problem was built for.
+
+        The header and the title are translated by the page, but a few answers
+        carry words of their own, and those are built here.
+
+        Args:
+            to_translate: The mapping of a term over the languages.
+
+        Returns:
+            The term in the language of this problem.
+        """
+        return to_translate[self.language]
 
     @abstractmethod
     def _generate(self) -> Tuple[Expr, Expr, List[Expr]]:
@@ -77,9 +107,10 @@ class CalculusProblem():
             raise GeneratorsNeeded()
         if solutions == BooleanTrue() or solutions == BooleanFalse():
             if solutions == BooleanTrue():
-                solutions_str = r"$x \in {\rm I\!R}$"
+                solutions_str = r"$x \in \mathbb{R}$"
             else:
-                solutions_str = r"$x \in \O$"
+                # \O is the Danish letter and is invalid in math mode
+                solutions_str = r"$x \in \emptyset$"
         else:
             solutions_str = None
         return solutions_str
@@ -154,12 +185,8 @@ class FuncVariations(CalculusProblem):
         der = self._get_der_sign_expr(expression)
 
         l_b, u_b = self._get_bounds_validity()
-        roots_m = get_roots(der, degree=get_degree(der, gen=self.x), as_tex=False, l_b=l_b, u_b=u_b)
-
-        roots = []
-        for r in roots_m:
-            if r not in roots:
-                roots.append(r)
+        roots = get_roots(der, degree=get_degree(der, gen=self.x), as_tex=False,
+                          l_b=l_b, u_b=u_b)
 
         def sign_of_der(x_val):
             val = der.evalf(subs={self.x: x_val})
@@ -169,19 +196,44 @@ class FuncVariations(CalculusProblem):
                 return "+"
             return "-"
 
+        def sign_between(low, high):
+            """The sign of the derivative strictly between two bounds.
+
+            The bounds are those of the interval the function is defined on, so
+            the point sampled has to lie inside it. Sampling a fixed abscissa
+            instead, x = 0 or a root plus one, reads the derivative where the
+            function does not live and reverses the arrows of the table.
+
+            Args:
+                low: The lower bound, possibly -oo.
+                high: The upper bound, possibly oo.
+
+            Returns:
+                "+", "-" or "0".
+            """
+            if low == -oo and high == oo:
+                sample = 0.
+            elif low == -oo:
+                sample = high - 1
+            elif high == oo:
+                sample = low + 1
+            else:
+                sample = (low + high) / 2
+            return sign_of_der(sample)
+
         df_values = [latex(self._real_lim(der, l_b))]
         for i, r in enumerate(roots):
             if i == 0:
-                df_values.append(sign_of_der(roots[0] - 1.))
+                df_values.append(sign_between(l_b, r))
 
             df_values.append("0")
 
             if i == len(roots) - 1:
-                df_values.append(sign_of_der(roots[-1] + 1.))
+                df_values.append(sign_between(r, u_b))
             else:
-                df_values.append(sign_of_der((r + roots[i + 1]) / 2))
+                df_values.append(sign_between(r, roots[i + 1]))
         if not len(roots):  # No roots, just get the constant sign of the derivative
-            df_values.append(sign_of_der(0.))
+            df_values.append(sign_between(l_b, u_b))
         df_values.append(latex(self._real_lim(der, u_b)))
 
         f_variations = []

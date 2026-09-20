@@ -33,3 +33,6 @@ Encadrement
 Ensemble de définition
 Trouver le polynôme
 Données
+Pas de solutions
+et
+ou

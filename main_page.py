@@ -64,9 +64,9 @@ def get_pb_classes(problems_select):
 
 
 @st.cache_data
-def generate(problems_select, n_expr, shuffle=False):
+def generate(problems_select, n_expr, shuffle=False, language="french"):
     classes = get_pb_classes(problems_select)
-    problems = [pb() for pb in classes]
+    problems = [pb(language=language) for pb in classes]
     solution_tables = []
     questions_tables = []
     if shuffle:
@@ -109,7 +109,7 @@ nb_eqs = st.slider(label=_(num_eqs_per_table_), min_value=1, max_value=20, value
 
 shuffle = st.checkbox(_(shuffle_problems_))
 if pb_selects:
-    solution, questions = generate(pb_selects, nb_eqs, shuffle)
+    solution, questions = generate(pb_selects, nb_eqs, shuffle, language)
     if solution is not None:
         st.subheader(_(generate_code_))
         # snip[] carries the two documents and snip_name[] their names, paired

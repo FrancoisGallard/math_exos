@@ -33,3 +33,6 @@ Bounds
 Domain of definition
 Find the polynomial
 Data
+No solution
+and
+or

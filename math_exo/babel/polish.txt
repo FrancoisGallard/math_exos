@@ -33,3 +33,6 @@ Enquadramento
 Domínio de definição
 Encontrar o polinómio
 Dados
+Sem solução
+e
+ou

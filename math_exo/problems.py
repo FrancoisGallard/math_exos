@@ -29,7 +29,7 @@ from sympy.calculus.util import continuous_domain
 from sympy.polys.specialpolys import random_poly
 from sympy.solvers.inequalities import reduce_rational_inequalities
 
-from math_exo.base_problems import CalculusProblem, FuncVariations
+from math_exo.base_problems import MAX_DRAWS, CalculusProblem, FuncVariations
 from math_exo.base_problems import ExpandFactorFindRoots, sym_rand_int, DifferentiationProblem
 from math_exo.internationalization import *
 from math_exo.utils import pretty_print_eq, get_roots
@@ -44,7 +44,10 @@ class IdentiteRemarquableA2_B2(ExpandFactorFindRoots):
 
     def _get_one_expr(self) -> Expr:
         x = self.x
-        return (randrange(1, self.max_coeff) * x) ** 2 - randrange(self.min_coeff, self.max_coeff) ** 2
+        b = randrange(self.min_coeff, self.max_coeff)
+        while b == 0:  # (a.x)**2 = 0 is no longer a difference of squares
+            b = randrange(self.min_coeff, self.max_coeff)
+        return (randrange(1, self.max_coeff) * x) ** 2 - b ** 2
 
 
 class IdentiteRemarquable(ExpandFactorFindRoots):
@@ -348,7 +351,7 @@ class LinearSystem2eqs(CalculusProblem):
         if sol:
             sol_str = r"$[" + ",".join([latex(s) for s in sol]) + r"]$"
         else:
-            sol_str = "Pas de solutions"
+            sol_str = self._translate(no_solution_)
         return eq_str, sol_str
 
 
@@ -368,7 +371,9 @@ class Inequalities2Lin(CalculusProblem):
         solutions_str = self._check_eq_sol(equation, solutions)
         if solutions_str is None:
             solutions_str = "$ " + latex(solutions) + " $"
-            equation_str = "$ " + latex(left) + r" \leq " + latex(right) + " $"
+        # Outside the branch: an answer of R or of the empty set still needs
+        # its statement printed
+        equation_str = "$ " + latex(left) + r" \leq " + latex(right) + " $"
         return equation_str, solutions_str
 
 
@@ -394,7 +399,9 @@ class InequalitiesProd2Lin(CalculusProblem):
         solutions_str = self._check_eq_sol(equation, solutions)
         if solutions_str is None:
             solutions_str = "$ " + latex(solutions) + " $"
-            solutions_str = solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+            solutions_str = solutions_str.replace(
+                r"\wedge", f"$ {self._translate(and_)} $").replace(
+                r"\vee", f"$ {self._translate(or_)} $")
         equation_str = "$ " + latex(equation) + r" $"
 
         return equation_str, solutions_str
@@ -423,7 +430,9 @@ class InequalitiesProd2LinK(CalculusProblem):
         equation_str = "$ " + latex(equation) + r" $"
         if solutions_str is None:
             solutions_str = "$ " + latex(solutions) + " $"
-            solutions_str = solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+            solutions_str = solutions_str.replace(
+                r"\wedge", f"$ {self._translate(and_)} $").replace(
+                r"\vee", f"$ {self._translate(or_)} $")
 
         return equation_str, solutions_str
 
@@ -456,7 +465,9 @@ class InequalitiesDivLinK(CalculusProblem):
         solutions_str = self._check_eq_sol(equation, solutions)
         if solutions_str is None:
             solutions_str = "$ " + latex(solutions) + " $"
-            solutions_str = solutions_str.replace(r"\wedge", "$ et $").replace(r"\vee", "$ ou $")
+            solutions_str = solutions_str.replace(
+                r"\wedge", f"$ {self._translate(and_)} $").replace(
+                r"\vee", f"$ {self._translate(or_)} $")
         equation_str = "$ " + latex(equation) + r" $"
 
         # Both sides over the same denominator: (left - k.right)/right <= | >= 0
@@ -553,7 +564,7 @@ class FrameMonotonicFunc(CalculusProblem):
 
     def _generate(self) -> Tuple[str, str, str]:
         x = self.x
-        while True:
+        for _ in range(MAX_DRAWS):
             expression = self._get_one_expr()
             lower = randint(-self.max_coeff // 2, self.max_coeff // 2)
             interval = Interval(lower, lower + randint(1, 6))
@@ -567,6 +578,11 @@ class FrameMonotonicFunc(CalculusProblem):
             except Exception:
                 continue
             break
+        else:
+            raise ValueError(
+                f"no function monotonic over an interval in {MAX_DRAWS} draws, "
+                f"the coefficient range [{self.min_coeff}, {self.max_coeff}] is too narrow"
+            )
 
         low, high = [expression.subs(x, bound) for bound in interval.args[:2]]
         if low.evalf() > high.evalf():  # f is decreasing over the interval

@@ -33,3 +33,6 @@ Abschätzung
 Definitionsmenge
 Das Polynom bestimmen
 Gegeben
+Keine Lösung
+und
+oder

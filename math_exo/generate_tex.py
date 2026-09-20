@@ -98,6 +98,7 @@ def generate_files_content(solution_tables, questions_tables, title):
         outf.write(r"\usepackage[margin=1cm, tmargin=1cm, textheight=20cm, vmargin=1.5cm]{geometry}" + "\n")
         outf.write(r"\usepackage[latin1, utf8]{inputenc}" + "\n")
         outf.write(r"\usepackage[french]{babel}" + "\n")
+        outf.write(r"\usepackage{amssymb}" + "\n")  # the R of an answer of R
         outf.write(r"\usepackage{systeme}" + "\n")
         outf.write(r"\begin{document}" + "\n")
         outf.write(r"\date{}" + "\n")

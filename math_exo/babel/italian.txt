@@ -33,3 +33,6 @@ Limitazione
 Insieme di definizione
 Trovare il polinomio
 Dati
+Nessuna soluzione
+e
+o
